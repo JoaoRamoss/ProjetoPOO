@@ -161,6 +161,47 @@ public class Jogador {
         this.principal = principal;
     }
 
+    public int getVelocidade () {
+        return this.clone().velocidade;
+    }
+
+    public int getResistencia() {
+        return this.clone().resistencia;
+    }
+
+    public int getDestreza () {
+        return this.clone().destreza;
+    }
+    public int getImpulsao () {
+        return this.clone().impulsao;
+    }
+    public int getJogoCabeca () {
+        return this.clone().jogoCabeca;
+    }
+
+    public int getRemate () {
+        return this.clone().remate;
+    }
+
+    public int getCapPasse () {
+        return this.clone().capPasse;
+    }
+
+    public int getElast () {
+        return this.clone().elast;
+    }
+
+    public String getNomeEquipa () {
+        return this.clone().nomeEquipa;
+    }
+
+    public String getNome () {
+        return this.clone().nome;
+    }
+
+    public boolean getPrincipal () {
+        return this.clone().principal;
+    }
 
     /**
      * Coloca as informações todas sobre o objeto em uma String.
