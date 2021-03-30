@@ -11,7 +11,8 @@ public class Jogador {
     private List<String> equipasAnteriores;
 
     /**
-     * Tipos diferentes de jogador possiveis.
+     * Tipos diferentes de jog
+     * ador possiveis.
      */
     enum Tipojogador {
         GuardaRedes,
@@ -280,7 +281,7 @@ public class Jogador {
      * Obtem um score geral dependendo da posição em que o jogador joga.
      * @return Valor do score em "overall".
      */
-    public double overall () {
+    public int overall () {
         double res = switch (this.posicao) {
             case GuardaRedes -> this.velocidade * 0.05 + this.resistencia * 0.15 + this.destreza * 0.25 + this.impulsao * 0.15 + this.jogoCabeca * 0.05 + this.remate * 0.05 + this.capPasse * 0.15 + this.elast * 0.15;
             case Medio -> this.velocidade * 0.10 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.25 + this.capPasse * 0.25;
@@ -288,7 +289,8 @@ public class Jogador {
             case Lateral -> this.velocidade * 0.25 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.15 + this.capPasse * 0.20;
             case Avancado -> this.velocidade * 0.25 + this.resistencia * 0.10 + this.destreza * 0.10 + this.impulsao * 0.15 + this.jogoCabeca * 0.15 + this.remate * 0.20 + this.capPasse * 0.05;
         };
-        return res;
+        int overall = (int) Math.round(res);
+        return overall;
     }
 
     /**
@@ -300,7 +302,10 @@ public class Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(j.nome).append("\n");
         sb.append("Equipa: ").append(j.nomeEquipa).append("\n");
-        sb.append("Equipas anteriores: ").append(j.equipasAnteriores.toString()).append("\n");
+        if(j.equipasAnteriores.isEmpty())
+            sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
+        else
+            sb.append("Equipas anteriores: ").append(j.equipasAnteriores.toString()).append("\n");
         sb.append("Posição: ").append(j.posicao.toString());
         sb.append("\nResistência: ").append(j.resistencia);
         sb.append("\nVelocidade: ").append(j.velocidade);
@@ -311,6 +316,7 @@ public class Jogador {
         sb.append("\nCapacidade de passe: ").append(j.capPasse);
         if (j.posicao == Tipojogador.GuardaRedes)
             sb.append("\nElasticidade: ").append(j.elast);
+        sb.append("\nOverall: ").append(j.overall());
         return sb.toString();
     }
     /**
