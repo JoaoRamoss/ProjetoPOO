@@ -39,49 +39,50 @@ public class Jogador {
         //Cada jogador tem caracteristicas diferentes, e, portanto, uma formula diferente.
         //Os limites a que o random pode chegar é alterado consoante os pontos fracos e fortes de cada jogador.
         if (j == Tipojogador.GuardaRedes) {
-            this.velocidade = random.nextInt(50) + 1;
-            this.resistencia = random.nextInt(60) + 1;
-            this.destreza = random.nextInt(80) + 1;
-            this.impulsao = random.nextInt(100) + 1;
-            this.jogoCabeca = random.nextInt(30) + 1;
-            this.remate = random.nextInt(30) + 1;
-            this.capPasse = random.nextInt(100) + 1;
-            this.elast = random.nextInt(100) + 1;
-        } else if (j == Tipojogador.Avancado) {
-            this.velocidade = random.nextInt(100) + 1;
-            this.resistencia = random.nextInt(100) + 1;
-            this.destreza = random.nextInt(100) + 1;
-            this.impulsao = random.nextInt(100) + 1;
-            this.jogoCabeca = random.nextInt(100) + 1;
-            this.remate = random.nextInt(100) + 1;
-            this.capPasse = random.nextInt(100) + 1;
+            this.velocidade = random.nextInt(50-25) + 25;
+            this.resistencia = random.nextInt(60-45) + 45;
+            this.destreza = random.nextInt(90-60) + 60;
+            this.impulsao = random.nextInt(90-75) + 75;
+            this.jogoCabeca = random.nextInt(30-15) + 15;
+            this.remate = random.nextInt(30-20) + 20;
+            this.capPasse = random.nextInt(95-80) + 80;
+            this.elast = random.nextInt(99-75) + 75;
+        }
+        else if (j == Tipojogador.Avancado) {
+            this.velocidade = random.nextInt(99-75) + 75;
+            this.resistencia = random.nextInt(85-70) + 70;
+            this.destreza = random.nextInt(90-65) + 65;
+            this.impulsao = random.nextInt(99-70) + 70;
+            this.jogoCabeca = random.nextInt(99-80) + 80;
+            this.remate = random.nextInt(99-85) + 85;
+            this.capPasse = random.nextInt(80-55) + 55;
         }
         else if (j == Tipojogador.Defesa) {
-            this.velocidade = random.nextInt(70) + 1;
-            this.resistencia = random.nextInt(70) + 1;
-            this.destreza = random.nextInt(70) + 1;
-            this.impulsao = random.nextInt(60) + 1;
-            this.jogoCabeca = random.nextInt(70) + 1;
-            this.remate = random.nextInt(70) + 1;
-            this.capPasse = random.nextInt(90) + 1;
+            this.velocidade = random.nextInt(75-50) + 50;
+            this.resistencia = random.nextInt(90-75) + 75;
+            this.destreza = random.nextInt(80-65) + 65;
+            this.impulsao = random.nextInt(85-65) + 65;
+            this.jogoCabeca = random.nextInt(95-80) + 80;
+            this.remate = random.nextInt(70-45) + 45;
+            this.capPasse = random.nextInt(80-65) + 65;
         }
         else if (j == Tipojogador.Medio) {
-            this.velocidade = random.nextInt(50) + 1;
-            this.resistencia = random.nextInt(65) + 1;
-            this.destreza = random.nextInt(60) + 1;
-            this.impulsao = random.nextInt(40) + 1;
-            this.jogoCabeca = random.nextInt(60) + 1;
-            this.remate = random.nextInt(60) + 1;
-            this.capPasse = random.nextInt(100) + 1;
+            this.velocidade = random.nextInt(75-50) + 50;
+            this.resistencia = random.nextInt(90-75) + 75;
+            this.destreza = random.nextInt(85-70) + 70;
+            this.impulsao = random.nextInt(65-30) + 30;
+            this.jogoCabeca = random.nextInt(55-35) + 35;
+            this.remate = random.nextInt(90-70) + 70;
+            this.capPasse = random.nextInt(99-80) + 80;
         }
         else if (j == Tipojogador.Lateral) {
-            this.velocidade = random.nextInt(70) + 1;
-            this.resistencia = random.nextInt(70) + 1;
-            this.destreza = random.nextInt(70) + 1;
-            this.impulsao = random.nextInt(65) + 1;
-            this.jogoCabeca = random.nextInt(70) + 1;
-            this.remate = random.nextInt(70) + 1;
-            this.capPasse = random.nextInt(100) + 1;
+            this.velocidade = random.nextInt(99-80) + 80;
+            this.resistencia = random.nextInt(80-65) + 65;
+            this.destreza = random.nextInt(70-55) + 55;
+            this.impulsao = random.nextInt(65-45) + 45;
+            this.jogoCabeca = random.nextInt(70-50) + 50;
+            this.remate = random.nextInt(80-65) + 65;
+            this.capPasse = random.nextInt(95-75) + 75;
         }
         this.nome = "";
         this.nomeEquipa = "";
