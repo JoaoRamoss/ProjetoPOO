@@ -281,7 +281,7 @@ public class Jogador {
      * Obtem um score geral dependendo da posição em que o jogador joga.
      * @return Valor do score em "overall".
      */
-    public int overall () {
+    public double overall () {
         double res = switch (this.posicao) {
             case GuardaRedes -> this.velocidade * 0.05 + this.resistencia * 0.15 + this.destreza * 0.25 + this.impulsao * 0.15 + this.jogoCabeca * 0.05 + this.remate * 0.05 + this.capPasse * 0.15 + this.elast * 0.15;
             case Medio -> this.velocidade * 0.10 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.25 + this.capPasse * 0.25;
@@ -289,8 +289,7 @@ public class Jogador {
             case Lateral -> this.velocidade * 0.25 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.15 + this.capPasse * 0.20;
             case Avancado -> this.velocidade * 0.25 + this.resistencia * 0.10 + this.destreza * 0.10 + this.impulsao * 0.15 + this.jogoCabeca * 0.15 + this.remate * 0.20 + this.capPasse * 0.05;
         };
-        int overall = (int) Math.round(res);
-        return overall;
+        return res;
     }
 
     /**
@@ -316,7 +315,7 @@ public class Jogador {
         sb.append("\nCapacidade de passe: ").append(j.capPasse);
         if (j.posicao == Tipojogador.GuardaRedes)
             sb.append("\nElasticidade: ").append(j.elast);
-        sb.append("\nOverall: ").append(j.overall());
+        sb.append("\nOverall: ").append(j.overall()).append("\n\n");
         return sb.toString();
     }
     /**

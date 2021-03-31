@@ -12,11 +12,14 @@ public class Equipa {
 
     public Equipa() {
         jogadores = geraEquipa();
-        jogadores.forEach(j -> j.setEquipa(this.nome));
+        jogadores.forEach(j -> j.setEquipa(""));
+        this.jogadoresPrincipais = new ArrayList<>();
+        this.jogadoresSuplentes = new ArrayList<>();
+        getTopAvancados(jogadores);
     }
 
 
-    private List<Jogador> geraEquipa() {
+    private static List<Jogador> geraEquipa() {
         List<Jogador> j = new ArrayList<>();
         j.add(new Jogador(Jogador.Tipojogador.GuardaRedes));
         for (int i = 0; i < 2; i++) {
@@ -33,29 +36,55 @@ public class Equipa {
         return j;
     }
 
-    private List<Jogador> getTopAvancados(List<Jogador> lista) {
+    private double setSmallest(List<Jogador> j) {
+        double smallest = 200;
+        for (Jogador aux : j) {
+            if (aux.overall() < smallest) smallest = aux.overall();
+        }
+        return smallest;
+    }
+
+    private void getTopAvancados(List<Jogador> lista) {
         List<Jogador> aux = new ArrayList<>();
         List<Jogador> res = new ArrayList<>();
-        int max = 0;
+        double smallest = 200;
         for (Jogador jog : lista) {
             if (jog.getPosicao() == Jogador.Tipojogador.Avancado) {
                 aux.add(jog);
             }
         }
-        for (int i = 0; i < aux.size() - 1; i++)
-            if (res.size() <= 4)
-                res.add(aux.get(i));
 
-        for (int k = 0; k < aux.size() - 1; k++) {
-            for (int j = 0; j < res.size() - 1; j++) {
-                if (aux.get(k).overall() > res.get(j).overall())
-                    res.set(j, aux.get(k));
+        System.out.println("Total: ");
+        System.out.println(aux.toString());
+        for (Jogador jogador : aux) {
+            if (res.size() < 4) {
+                res.add(jogador.clone());
             }
         }
-        return res;
+        smallest = setSmallest(aux);
+        for (Jogador jogador : aux) {
+            for (int j = 0; j < res.size(); j++) {
+                if (jogador.overall() > smallest) {
+                    res.set(j, jogador.clone());
+                    smallest = setSmallest(res);
+                    System.out.println("smallest: " + smallest);
+                }
+            }
+        }
+        for (Jogador j : res) {
+            this.jogadoresPrincipais.add(j.clone());
+        }
+
+        for (Jogador jog : aux) {
+            boolean eq = false;
+            for (Jogador jog2 : res) {
+                if ((eq = jog.equals(jog2))) break;
+            }
+            if (!eq) this.jogadoresSuplentes.add(jog.clone());
+        }
     }
 
-    private List<Jogador> getTopDefesas(List<Jogador> lista) {
+    private static List<Jogador> getTopDefesas(List<Jogador> lista) {
         List<Jogador> aux = new ArrayList<>();
         List<Jogador> res = new ArrayList<>();
         int max = 0;
@@ -77,7 +106,7 @@ public class Equipa {
         return res;
     }
 
-    private List<Jogador> getTopMedios(List<Jogador> lista) {
+    private static List<Jogador> getTopMedios(List<Jogador> lista) {
         List<Jogador> aux = new ArrayList<>();
         List<Jogador> res = new ArrayList<>();
         int max = 0;
@@ -99,7 +128,7 @@ public class Equipa {
         return res;
     }
 
-    private List<Jogador> getTopLaterais(List<Jogador> lista) {
+    private static List<Jogador> getTopLaterais(List<Jogador> lista) {
         List<Jogador> aux = new ArrayList<>();
         List<Jogador> res = new ArrayList<>();
         int max = 0;
@@ -121,7 +150,7 @@ public class Equipa {
         return res;
     }
 
-    private List<Jogador> getGuardaRedes(List<Jogador> lista) {
+    private static List<Jogador> getGuardaRedes(List<Jogador> lista) {
         List<Jogador> aux = new ArrayList<>();
         List<Jogador> res = new ArrayList<>();
         int max = 0;
@@ -141,6 +170,12 @@ public class Equipa {
             }
         }
         return res;
+    }
+
+    public List<Jogador> getPrincipais () {
+        List <Jogador> list = new ArrayList<>();
+        for (Jogador j : this.jogadoresPrincipais) list.add(j.clone());
+        return list;
     }
 
 }
