@@ -132,8 +132,11 @@ public class Jogador {
      * @param equipaNova Nova equipa do jogador.
      */
     public void mudaEquipa (String equipaNova) {
+        StringBuilder sb = new StringBuilder("Mudança de equipa efetuada com sucesso: ").append(this.nomeEquipa).append(" -> ");
         this.equipasAnteriores.add(this.nomeEquipa);
         this.nomeEquipa = equipaNova;
+        sb.append(this.nomeEquipa).append("\n");
+        System.out.println(sb.toString());
     }
 
     /**
@@ -316,7 +319,7 @@ public class Jogador {
         sb.append("\nCapacidade de passe: ").append(j.capPasse);
         if (j.posicao == Tipojogador.GuardaRedes)
             sb.append("\nElasticidade: ").append(j.elast);
-        sb.append("\nOverall: ").append(j.overall()).append("\n\n");
+        sb.append(String.format("\nOverall: %.2f", j.overall())).append("\n\n");
         return sb.toString();
     }
     /**

@@ -1,5 +1,6 @@
 package ProjetoPOO;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Equipa {
     public Equipa(String nome) {
         this.jogadores = new ArrayList<>();
         geraEquipa();
+        this.nome = nome;
         this.jogadores.forEach(j -> j.setEquipa(nome));
         this.jogadoresPrincipais = new ArrayList<>();
         this.jogadoresSuplentes = new ArrayList<>();
@@ -30,6 +32,7 @@ public class Equipa {
         this.jogadores = new ArrayList<>();
         this.jogadoresPrincipais = new ArrayList<>();
         this.jogadoresSuplentes = new ArrayList<>();
+        this.nome = e.getNome();
 
         for (Jogador j : e.jogadores) {
             this.jogadores.add(j.clone());
@@ -50,21 +53,51 @@ public class Equipa {
      */
     public String getNome () {return this.nome;}
 
+    public int getTotal (Jogador j) {
+        return switch(j.getPosicao()) {
+            case Avancado -> 3;
+            case Lateral -> 2;
+            case Medio -> 3;
+            case Defesa -> 2;
+            case GuardaRedes -> 1;
+        };
+    }
+
+    /**
+     * Obtem os jogadores principais.
+     * @return Lista com os jogadores principais.
+     */
+    public List<Jogador> getPrincipais () {
+        List <Jogador> list = new ArrayList<>();
+        for (Jogador j : this.jogadoresPrincipais) list.add(j.clone());
+        return list;
+    }
+
+    public List<Jogador> getJogadores () {
+        List<Jogador> aux = new ArrayList<>();
+        for (Jogador j : this.jogadores) aux.add(j.clone());
+        return aux;
+    }
+
+    public List<Jogador> getSuplentes() {
+        List<Jogador> list = new ArrayList<>();
+        for (Jogador j : this.jogadoresSuplentes) list.add(j.clone());
+        return list;
+    }
     /**
      * Gera uma equipa e coloca na variavel de instancia "jogadores".
      */
     private void geraEquipa() {
-        this.jogadores.add(new Jogador(Jogador.Tipojogador.GuardaRedes));
         for (int i = 0; i < 2; i++) {
+            this.jogadores.add(new Jogador(Jogador.Tipojogador.GuardaRedes));
+        }
+        for (int i = 0; i < 4; i++) {
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Defesa));
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Lateral));
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Medio));
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Avancado));
-        }
-        for (int i = 0; i < 12; i++) {
-            this.jogadores.add(new Jogador());
         }
     }
 
@@ -121,15 +154,22 @@ public class Equipa {
     }
 
     /**
-     * Obtem os jogadores principais.
-     * @return Lista com os jogadores principais.
+     * Insere um jogador na equipa.
+     * @param j Jogador a inserir na equipa.
      */
-    public List<Jogador> getPrincipais () {
-        List <Jogador> list = new ArrayList<>();
-        for (Jogador j : this.jogadoresPrincipais) list.add(j.clone());
-        return list;
+    public void insereJogador (Jogador j) {
+        Jogador.Tipojogador tipo = j.getPosicao();
+        this.jogadores.add(j.clone());
+        this.getTop(tipo, getTotal(j));
     }
 
+    public void trocaEquipa (int pos, Equipa e) {
+        Jogador j = this.jogadores.get(pos).clone();
+        j.mudaEquipa(e.getNome());
+        e.insereJogador(j);
+        this.jogadores.remove(pos);
+        this.getTop(j.getPosicao(), getTotal(j));
+    }
     /**
      * Função toString da classe Equipa.
      * @return String com o conteúdo da classe.
@@ -138,7 +178,10 @@ public class Equipa {
         StringBuilder sb = new StringBuilder();
         sb.append("Jogadores Principais:\n-------------------------------------\n");
         for (Jogador j : this.getPrincipais()) sb.append(j.toString());
-        sb.append("--------------------------------------\n");
+        sb.append("--------------------------------------\n\n");
+        sb.append("Jogadores Suplentes: \n-------------------------------------\n");
+        for (Jogador j : this.getSuplentes()) sb.append(j.toString());
+        sb.append("--------------------------------------\n\n");
         return sb.toString();
     }
 
