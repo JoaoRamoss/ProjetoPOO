@@ -95,7 +95,7 @@ public class Equipa {
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Defesa));
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Lateral));
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {w
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Medio));
             this.jogadores.add(new Jogador(Jogador.Tipojogador.Avancado));
         }
