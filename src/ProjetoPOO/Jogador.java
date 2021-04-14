@@ -6,9 +6,11 @@ import java.util.Random;
 public class Jogador {
 
     //Variáveis de Instância.
+    private String ID;
     private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, elast;
     private String nomeEquipa, nome;
     private List<String> equipasAnteriores;
+    private boolean principal;
 
     /**
      * Tipos diferentes de jog
@@ -87,10 +89,12 @@ public class Jogador {
         this.nome = "";
         this.nomeEquipa = "";
         this.equipasAnteriores = new ArrayList<>();
+        this.principal = random.nextBoolean();
     }
 
     //Construtor parametrizado.
-    public Jogador (Tipojogador j, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca, int remate, int capPasse, int elast, StringBuffer nome, StringBuffer equipa, boolean princ) {
+    public Jogador (String ID, Tipojogador j, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca, int remate, int capPasse, int elast, StringBuffer nome, StringBuffer equipa, boolean principal) {
+        this.ID = ID;
         this.posicao = j;
         this.velocidade = velocidade;
         this.resistencia = resistencia;
@@ -106,10 +110,35 @@ public class Jogador {
         this.nome = new String(nome);
         this.nomeEquipa = new String(equipa);
         this.equipasAnteriores = new ArrayList<>();
+        this.principal = principal;
+    }
+
+    //Construtor parametrizado.
+    public Jogador (String ID, Tipojogador j, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca, int remate, int capPasse, int elast,
+                    StringBuffer nome, StringBuffer equipa, List<String> anteriores, boolean principal) {
+        this.ID = ID;
+        this.posicao = j;
+        this.velocidade = velocidade;
+        this.resistencia = resistencia;
+        this.destreza = destreza;
+        this.impulsao = impulsao;
+        this.jogoCabeca = jogoCabeca;
+        this.remate = remate;
+        this.capPasse = capPasse;
+        if (j == Tipojogador.GuardaRedes)
+            this.elast = elast;
+        else
+            this.elast = 0;
+        this.nome = new String(nome);
+        this.nomeEquipa = new String(equipa);
+        this.equipasAnteriores = new ArrayList<>();
+        this.equipasAnteriores.addAll(anteriores);
+        this.principal = principal;
     }
 
     //Construtor que recebe objeto.
     public Jogador (Jogador j) {
+        this.ID = j.ID;
         this.posicao = j.posicao;
         this.velocidade = j.velocidade;
         this.resistencia = j.resistencia;
@@ -132,24 +161,21 @@ public class Jogador {
      * @param equipaNova Nova equipa do jogador.
      */
     public void mudaEquipa (String equipaNova) {
-        StringBuilder sb = new StringBuilder("Mudança de equipa efetuada com sucesso: ").append(this.nomeEquipa).append(" -> ");
         this.equipasAnteriores.add(this.nomeEquipa);
         this.nomeEquipa = equipaNova;
-        sb.append(this.nomeEquipa).append("\n");
-        System.out.println(sb.toString());
     }
 
     /**
      * Obtem a velocidade de um jogador.
      * @return A pontuação da velocidade atribuída ao jogador.
      */
-    public int getVelocidade () { return this.clone().velocidade;}
+    public int getVelocidade () { return this.velocidade;}
 
     /**
      * Obtem posição do jogador.
      * @return Posição do jogador.
      */
-    public Tipojogador getPosicao () {return this.clone().posicao;}
+    public Tipojogador getPosicao () {return this.posicao;}
 
     /**
      * Set na velocidade do jogador.
@@ -161,7 +187,7 @@ public class Jogador {
      * Obtem a pontuação da resistênia do jogador.
      * @return A pontuação da resistência do jogador.
      */
-    public int getResistencia() { return this.clone().resistencia;}
+    public int getResistencia() { return this.resistencia;}
 
     /**
      * Set na resistência do jogador.
@@ -174,7 +200,7 @@ public class Jogador {
      * @return A pontuação da resistência do jogador.
      */
     public int getDestreza () {
-        return this.clone().destreza;
+        return this.destreza;
     }
 
     /**
@@ -187,7 +213,7 @@ public class Jogador {
      * Obtem a pontuação da impulsão do jogador.
      * @return A pontuação da impulsão do jogador.
      */
-    public int getImpulsao () {return this.clone().impulsao;}
+    public int getImpulsao () {return this.impulsao;}
 
     /**
      * Set na impulsão do jogador.
@@ -199,7 +225,7 @@ public class Jogador {
      * Obtem a pontuação do jogo de cabeça do jogador.
      * @return A pontuação do jogo de cabeça do jogador.
      */
-    public int getJogoCabeca () {return this.clone().jogoCabeca; }
+    public int getJogoCabeca () {return this.jogoCabeca; }
 
     /**
      * Set no jogo de cabeça do jogador.
@@ -212,7 +238,7 @@ public class Jogador {
      * @return  A pontuação do remate do jogador.
      */
     public int getRemate () {
-        return this.clone().remate;
+        return this.remate;
     }
 
     /**
@@ -226,7 +252,7 @@ public class Jogador {
      * @return A pontuação da capacidade de passe do jogador.
      */
     public int getCapPasse () {
-        return this.clone().capPasse;
+        return this.capPasse;
     }
 
     /**
@@ -240,7 +266,7 @@ public class Jogador {
      * @return  A elasticidade do jogador.
      */
     public int getElast () {
-        return this.clone().elast;
+        return this.elast;
     }
 
     /**
@@ -254,7 +280,7 @@ public class Jogador {
      * @return O nome da equipa onde o jogador está de momento.
      */
     public String getNomeEquipa () {
-        return this.clone().nomeEquipa;
+        return this.nomeEquipa;
     }
 
     /**
@@ -270,7 +296,7 @@ public class Jogador {
      * @return O nome do jogador.
      */
     public String getNome () {
-        return this.clone().nome;
+        return this.nome;
     }
 
     /**
@@ -280,6 +306,12 @@ public class Jogador {
     public void setNome (String nome) {
         this.nome = nome;
     }
+
+    public void setPrincipal (boolean bool) {this.principal = bool;}
+
+    public boolean isPrincipal () {return this.principal;}
+
+    public String getID () {return this.ID;}
 
     /**
      * Obtem um score geral dependendo da posição em que o jogador joga.

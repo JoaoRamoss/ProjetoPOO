@@ -1,13 +1,18 @@
 package ProjetoPOO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
-		Equipa e = new Equipa("F.C Porto");
-		Equipa b = new Equipa("Fafe");
-		//System.out.println(e.getJogadores().get(0).toString());
-		e.trocaEquipa(0, b);
-		System.out.println(b.getJogadores().get(b.getJogadores().size()-1).toString());
-
+        Equipa teste = new Equipa("Porto");
+        Equipa second = new Equipa("Belenenses");
+        StringBuffer sb = new StringBuffer("Júlio César");
+        StringBuffer sbp = new StringBuffer("Porto");
+        Jogador j = new Jogador("RDFEFSGFWRG_fsfewSEFGWEGWg", Jogador.Tipojogador.Avancado, 50, 50, 50, 50, 50, 50, 50, 50, sb, sbp, true);
+        //System.out.println(j.toString());
+        teste.addJogador(j);
+        teste.trocaEquipa(second, j);
     }
 }
