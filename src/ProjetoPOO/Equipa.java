@@ -123,7 +123,7 @@ public class Equipa {
         this.removeJogador(j);
     }
 
-    
+
     public String toString () {
         List<String> list = new ArrayList<>();
         this.getJogadores().forEach(j -> list.add(j.getNome()));
