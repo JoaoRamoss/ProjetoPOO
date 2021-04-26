@@ -1,7 +1,5 @@
 package ProjetoPOO;
 
-import javax.print.event.PrintJobAdapter;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +130,7 @@ public class Equipa {
         sb.append(list.toString()).append("\n");
         return sb.toString();
     }
+
     /**
      * Função clone da classe.
      * @return Clone do objeto inserido (neste caso equipa).
