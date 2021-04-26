@@ -7,23 +7,10 @@ public class Jogador {
 
     //Variáveis de Instância.
     private String ID;
-    private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, elast, cruzamentos, capRecup;
+    private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse;
     private String nomeEquipa, nome;
     private List<String> equipasAnteriores;
     private boolean principal;
-
-    /**
-     * Tipos diferentes de jog
-     * ador possiveis.
-     */
-    enum Tipojogador {
-        GuardaRedes,
-        Defesa,
-        Medio,
-        Avancado,
-        Lateral
-    }
-    private Tipojogador posicao;
 
     //Variável de classe.
     private static final Random random = new Random();
@@ -32,16 +19,14 @@ public class Jogador {
      * @brief construtor vazio de jogador.
      * Retorna um jogador cujas características são todas aleatórias.
      */
-    public Jogador () {
-        this(Tipojogador.values()[random.nextInt(5)]);
-    }
+    public Jogador () {new Avancado();}
 
     //Construtor parametrizado
-    public Jogador (Tipojogador j) {
-        this.posicao = j;
+    public Jogador (String posicao) {
+
         //Cada jogador tem caracteristicas diferentes, e, portanto, uma formula diferente.
         //Os limites a que o random pode chegar é alterado consoante os pontos fracos e fortes de cada jogador.
-        if (j == Tipojogador.GuardaRedes) {
+        if (posicao.equals("GuardaRedes")) {
             this.velocidade = random.nextInt(50-25) + 25;
             this.resistencia = random.nextInt(60-45) + 45;
             this.destreza = random.nextInt(90-60) + 60;
@@ -49,9 +34,8 @@ public class Jogador {
             this.jogoCabeca = random.nextInt(30-15) + 15;
             this.remate = random.nextInt(30-20) + 20;
             this.capPasse = random.nextInt(95-80) + 80;
-            this.elast = random.nextInt(99-75) + 75;
         }
-        else if (j == Tipojogador.Avancado) {
+        else if (posicao.equals("Avancado")) {
             this.velocidade = random.nextInt(99-75) + 75;
             this.resistencia = random.nextInt(85-70) + 70;
             this.destreza = random.nextInt(90-65) + 65;
@@ -60,7 +44,7 @@ public class Jogador {
             this.remate = random.nextInt(99-85) + 85;
             this.capPasse = random.nextInt(80-55) + 55;
         }
-        else if (j == Tipojogador.Defesa) {
+        else if (posicao.equals("Defesa")) {
             this.velocidade = random.nextInt(75-50) + 50;
             this.resistencia = random.nextInt(90-75) + 75;
             this.destreza = random.nextInt(80-65) + 65;
@@ -69,7 +53,7 @@ public class Jogador {
             this.remate = random.nextInt(70-45) + 45;
             this.capPasse = random.nextInt(80-65) + 65;
         }
-        else if (j == Tipojogador.Medio) {
+        else if (posicao.equals("Medio")) {
             this.velocidade = random.nextInt(75-50) + 50;
             this.resistencia = random.nextInt(90-75) + 75;
             this.destreza = random.nextInt(85-70) + 70;
@@ -77,9 +61,8 @@ public class Jogador {
             this.jogoCabeca = random.nextInt(55-35) + 35;
             this.remate = random.nextInt(90-70) + 70;
             this.capPasse = random.nextInt(99-80) + 80;
-            this.capRecup = random.nextInt(99-75) + 75;
         }
-        else if (j == Tipojogador.Lateral) {
+        else if (posicao.equals("Lateral")) {
             this.velocidade = random.nextInt(99-80) + 80;
             this.resistencia = random.nextInt(80-65) + 65;
             this.destreza = random.nextInt(70-55) + 55;
@@ -87,7 +70,6 @@ public class Jogador {
             this.jogoCabeca = random.nextInt(70-50) + 50;
             this.remate = random.nextInt(80-65) + 65;
             this.capPasse = random.nextInt(95-75) + 75;
-            this.cruzamentos = random.nextInt(99-75) + 75;
         }
         this.nome = "";
         this.nomeEquipa = "";
@@ -96,10 +78,9 @@ public class Jogador {
     }
 
     //Construtor parametrizado.
-    public Jogador (String ID, String nome, String equipa, Tipojogador j, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+    public Jogador (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
                     int remate, int capPasse, boolean principal) {
         this.ID = ID;
-        this.posicao = j;
         this.velocidade = velocidade;
         this.resistencia = resistencia;
         this.destreza = destreza;
@@ -113,10 +94,9 @@ public class Jogador {
         this.principal = principal;
     }
 
-    public Jogador (String ID, String nome, String equipa, Tipojogador j, int velocidade, int resistencia, int destreza, int impulsao,
-                    int jogoCabeca, int remate, int capPasse, int special, boolean principal) {
+    public Jogador (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+                    int remate, int capPasse, boolean principal, List<String> anteriores) {
         this.ID = ID;
-        this.posicao = j;
         this.velocidade = velocidade;
         this.resistencia = resistencia;
         this.destreza = destreza;
@@ -124,29 +104,6 @@ public class Jogador {
         this.jogoCabeca = jogoCabeca;
         this.remate = remate;
         this.capPasse = capPasse;
-        if (j == Tipojogador.GuardaRedes) this.elast = special;
-        if (j == Tipojogador.Medio) this.capRecup = special;
-        if (j == Tipojogador.Lateral) this.cruzamentos = special;
-        this.nome = new String(nome);
-        this.nomeEquipa = new String(equipa);
-        this.equipasAnteriores = new ArrayList<>();
-        this.principal = principal;
-    }
-    //Construtor parametrizado.
-    public Jogador (String ID, String nome, String equipa, Tipojogador j, int velocidade, int resistencia, int destreza,
-                    int impulsao, int jogoCabeca, int remate, int capPasse, int special, List<String> anteriores, boolean principal) {
-        this.ID = ID;
-        this.posicao = j;
-        this.velocidade = velocidade;
-        this.resistencia = resistencia;
-        this.destreza = destreza;
-        this.impulsao = impulsao;
-        this.jogoCabeca = jogoCabeca;
-        this.remate = remate;
-        this.capPasse = capPasse;
-        if (j == Tipojogador.GuardaRedes) this.elast = special;
-        else if (j == Tipojogador.Medio) this.capRecup = special;
-        else if (j == Tipojogador.Lateral) this.cruzamentos = special;
         this.nome = new String(nome);
         this.nomeEquipa = new String(equipa);
         this.equipasAnteriores = new ArrayList<>();
@@ -154,29 +111,10 @@ public class Jogador {
         this.principal = principal;
     }
 
-    //Construtor parametrizado.
-    public Jogador (String ID, String nome, String equipa, Tipojogador j, int velocidade, int resistencia, int destreza,
-                    int impulsao, int jogoCabeca, int remate, int capPasse, List<String> anteriores, boolean principal) {
-        this.ID = ID;
-        this.posicao = j;
-        this.velocidade = velocidade;
-        this.resistencia = resistencia;
-        this.destreza = destreza;
-        this.impulsao = impulsao;
-        this.jogoCabeca = jogoCabeca;
-        this.remate = remate;
-        this.capPasse = capPasse;
-        this.nome = new String(nome);
-        this.nomeEquipa = new String(equipa);
-        this.equipasAnteriores = new ArrayList<>();
-        this.equipasAnteriores.addAll(anteriores);
-        this.principal = principal;
-    }
 
     //Construtor que recebe objeto.
     public Jogador (Jogador j) {
         this.ID = j.ID;
-        this.posicao = j.posicao;
         this.velocidade = j.velocidade;
         this.resistencia = j.resistencia;
         this.destreza = j.destreza;
@@ -184,14 +122,11 @@ public class Jogador {
         this.jogoCabeca = j.jogoCabeca;
         this.remate = j.remate;
         this.capPasse = j.capPasse;
-        if (j.posicao == Tipojogador.GuardaRedes)
-            this.elast = j.elast;
-        if (j.posicao == Tipojogador.Medio) this.capRecup = j.capRecup;
-        if (j.posicao == Tipojogador.Lateral) this.cruzamentos = j.cruzamentos;
         this.nome = j.nome;
         this.nomeEquipa = j.nomeEquipa;
         this.equipasAnteriores = new ArrayList<>(j.equipasAnteriores.size());
         this.equipasAnteriores.addAll(j.equipasAnteriores);
+        this.principal = j.isPrincipal();
     }
 
 
@@ -210,11 +145,6 @@ public class Jogador {
      */
     public int getVelocidade () { return this.velocidade;}
 
-    /**
-     * Obtem posição do jogador.
-     * @return Posição do jogador.
-     */
-    public Tipojogador getPosicao () {return this.posicao;}
 
     /**
      * Set na velocidade do jogador.
@@ -301,26 +231,14 @@ public class Jogador {
     public void setCapPasse (int capP) {this.capPasse = capP;}
 
     /**
-     * Obtem a elasticidade do jogador.
-     * @return  A elasticidade do jogador.
-     */
-    public int getElast () {
-        return this.elast;
-    }
-
-    /**
-     * Set na elasticidade do jogador (Só funciona se for um guarda-redes).
-     * @param elast Valor a atribuir à elasticidade do jogador.
-     */
-    public void setElast (int elast) {if (this.posicao == Tipojogador.GuardaRedes) this.elast = elast;}
-
-    /**
      * Obtem o nome da equipa do jogador.
      * @return O nome da equipa onde o jogador está de momento.
      */
     public String getNomeEquipa () {
         return this.nomeEquipa;
     }
+
+    public List<String> getEquipasAnteriores () {return this.equipasAnteriores;}
 
     /**
      * Dá set na quipa do jogador
@@ -352,70 +270,23 @@ public class Jogador {
 
     public String getID () {return this.ID;}
 
-    /**
-     * Obtem um score geral dependendo da posição em que o jogador joga.
-     * @return Valor do score em "overall".
-     */
-    public double overall () {
-        return switch (this.posicao) {
-            case GuardaRedes -> this.velocidade * 0.05 + this.resistencia * 0.15 + this.destreza * 0.25 + this.impulsao * 0.15 + this.jogoCabeca * 0.05 + this.remate * 0.05 + this.capPasse * 0.15 + this.elast * 0.15;
-            case Medio -> this.velocidade * 0.10 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.05 + this.capPasse * 0.20 + this.capRecup * 0.25;
-            case Defesa -> this.velocidade * 0.10 + this.resistencia * 0.25 + this.destreza * 0.10 + this.impulsao * 0.15 + this.jogoCabeca * 0.25 + this.remate * 0.05 + this.capPasse * 0.10;
-            case Lateral -> this.velocidade * 0.25 + this.resistencia * 0.15 + this.destreza * 0.15 + this.impulsao * 0.05 + this.jogoCabeca * 0.05 + this.remate * 0.10 + this.capPasse * 0.10 + this.cruzamentos * 0.15;
-            case Avancado -> this.velocidade * 0.25 + this.resistencia * 0.10 + this.destreza * 0.10 + this.impulsao * 0.15 + this.jogoCabeca * 0.15 + this.remate * 0.20 + this.capPasse * 0.05;
-        };
-    }
-
-    /**
-     * Coloca as informações todas sobre o objeto em uma String.
-     * @return String com as informações do jogador.
-     */
     public String toString () {
-        Jogador j = this.clone();
         StringBuilder sb = new StringBuilder("Jogador: ");
-        sb.append(j.nome).append("\n");
-        sb.append("Equipa: ").append(j.nomeEquipa).append("\n");
-        if(j.equipasAnteriores.isEmpty())
+        sb.append(this.getNome()).append("\n");
+        sb.append("Equipa: ").append(this.getNomeEquipa()).append("\n");
+        if(this.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
-            sb.append("Equipas anteriores: ").append(j.equipasAnteriores.toString()).append("\n");
-        sb.append("Posição: ").append(j.posicao.toString());
-        sb.append("\nResistência: ").append(j.resistencia);
-        sb.append("\nVelocidade: ").append(j.velocidade);
-        sb.append("\nDestreza: ").append(j.destreza);
-        sb.append("\nImpulsao: ").append(j.impulsao);
-        sb.append("\nJogo de cabeça: ").append(j.jogoCabeca);
-        sb.append("\nRemate: ").append(j.remate);
-        sb.append("\nCapacidade de passe: ").append(j.capPasse);
-        if (j.posicao == Tipojogador.GuardaRedes)
-            sb.append("\nElasticidade: ").append(j.elast);
-        else if (j.posicao == Tipojogador.Medio)
-            sb.append("\nCapacidade de Recuperação: ").append(j.capRecup);
-        else if (j.posicao == Tipojogador.Lateral)
-            sb.append("\nCapacidade de cruzamento: ").append(j.cruzamentos);
-        sb.append(String.format("\nOverall: %.2f", j.overall())).append("\n\n");
+            sb.append("Equipas anteriores: ").append(this.getEquipasAnteriores().toString()).append("\n");
+        sb.append("\nResistência: ").append(this.getResistencia());
+        sb.append("\nVelocidade: ").append(this.getVelocidade());
+        sb.append("\nDestreza: ").append(this.getDestreza());
+        sb.append("\nImpulsao: ").append(this.getImpulsao());
+        sb.append("\nJogo de cabeça: ").append(this.getJogoCabeca());
+        sb.append("\nRemate: ").append(this.getRemate());
+        sb.append("\nCapacidade de passe: ").append(this.getCapPasse());
         return sb.toString();
     }
-    /**
-     * Função para testar se um jogador é igual a outro.
-     * @param o Objeto fornecido à função.
-     * @return true no caso de serem iguais, false no caso de não serem.
-     */
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        Jogador j = (Jogador) o;
-        return (this.posicao == j.posicao && this.velocidade == j.velocidade && this.resistencia == j.resistencia
-                && this.destreza == j.destreza && this.impulsao == j.impulsao && this.jogoCabeca == j.jogoCabeca &&
-                this.capPasse == j.capPasse && this.elast == j.elast && this.nomeEquipa.toString().equals(j.nomeEquipa.toString()) &&
-                this.nome.toString().equals(j.nome.toString()));
-    }
 
-    /**
-     * Funçção para clonar o objeto.
-     * @return Um clone do jogador.
-     */
-    public Jogador clone () {
-        return new Jogador (this);
-    }
+    public Jogador clone () {return new Jogador (this);}
 }
