@@ -264,12 +264,28 @@ public class Jogador {
         this.nome = nome;
     }
 
+    /**
+     * @brief Set na informação sobre se um jogador é ou não principal.
+     * @param bool Booleano a colocar (true se for principal, false se nao for).
+     */
     public void setPrincipal (boolean bool) {this.principal = bool;}
 
+    /**
+     * @brief Retorna informação sobre se o jogador é ou não principal.
+     * @return  true se for principal, false se nao for.
+     */
     public boolean isPrincipal () {return this.principal;}
 
+    /**
+     *
+     * @return ID do Jogador.
+     */
     public String getID () {return this.ID;}
 
+    /**
+     * @brief Função toString da classe Jogador.
+     * @return String com a informação sobre o jogador.
+     */
     public String toString () {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(this.getNome()).append("\n");
@@ -288,5 +304,24 @@ public class Jogador {
         return sb.toString();
     }
 
+    /**
+     * @brief Função equals da classe jogador.
+     * @param o Object a comparar
+     * @return True se forem iguais, false se não forem.
+     */
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Jogador gr = (Jogador) o;
+        return (this.ID.equals(gr.getID()) && this.velocidade == gr.getVelocidade() && this.resistencia == gr.getResistencia() &&
+                this.destreza == gr.getDestreza() && this.impulsao == gr.getImpulsao() && this.jogoCabeca == gr.getJogoCabeca() &&
+                this.remate == gr.getRemate() && this.capPasse == this.getCapPasse() && this.nomeEquipa.equals(gr.getNomeEquipa()) &&
+                this.nome.equals(gr.getNome()) && this.equipasAnteriores.equals(gr.getEquipasAnteriores()) && this.principal == gr.isPrincipal());
+    }
+
+    /**
+     * @brief Funçao clone da classe Jogador.
+     * @return  Um jogador novo.
+     */
     public Jogador clone () {return new Jogador (this);}
 }

@@ -1,14 +1,18 @@
 package ProjetoPOO;
 
 import java.util.List;
+import java.util.Random;
 
 public class Lateral extends Jogador {
 
     private final String posicao = new String ("Lateral");
     private int cruzamento;
 
+    private static final Random random = new Random();
+
     public Lateral () {
         super ("Lateral");
+        this.cruzamento = random.nextInt(99-75) + 75;
     }
 
     public Lateral (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
@@ -28,15 +32,28 @@ public class Lateral extends Jogador {
         this.cruzamento = lat.getCruzamento();
     }
 
+    //Obtem capacidade de cruzamento do lateral.
     public int getCruzamento () {return this.cruzamento;}
 
+    //Set no cruzamento do Lateral.
+    public void setCruzamento(int cruzamento) {this.cruzamento = cruzamento;}
+
+    //Obtem a posição em que o jogador joga.
     public String getPosicao () {return this.posicao;}
 
+    /**
+     * Retorna o score em overall do jogador (Fórmula de cálculo varia para dar prioridade às caracteristicas mais importantes da posição em que joga).
+     * @return Resultado da fórmula de calculo do overall do jogador.
+     */
     public double overall () {
         return super.getVelocidade() * 0.25 + super.getResistencia() * 0.15 + super.getDestreza() * 0.15 + super.getImpulsao() * 0.05 + super.getJogoCabeca() * 0.05 +
                 super.getRemate() * 0.10 + super.getCapPasse() * 0.10 + this.cruzamento * 0.15;
     }
 
+    /**
+     * Função toString da subclasse Lateral.
+     * @return  String com informação sobre Lateral.
+     */
     @Override public String toString () {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
@@ -58,7 +75,12 @@ public class Lateral extends Jogador {
         return sb.toString();
     }
 
-    public boolean equals (Object o) {
+    /**
+     * Função equals da subclasse Lateral.
+     * @param o Object a comparar
+     * @return true se forem iguais, false se não forem.
+     */
+    @Override public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Lateral gr = (Lateral) o;
@@ -68,5 +90,9 @@ public class Lateral extends Jogador {
                 super.getNome().equals(gr.getNome()) && this.getCruzamento() == gr.getCruzamento());
     }
 
+    /**
+     * Função clone da subclasse Lateral.
+     * @return Novo Lateral.
+     */
     @Override public Lateral clone () {return new Lateral(this);}
 }

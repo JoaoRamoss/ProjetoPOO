@@ -121,7 +121,10 @@ public class Equipa {
         this.removeJogador(j);
     }
 
-
+    /**
+     * @brief Função toString da classe Equipa.
+     * @return String com a informação da equipa.
+     */
     public String toString () {
         List<String> list = new ArrayList<>();
         this.getJogadores().forEach(j -> list.add(j.getNome()));
@@ -129,6 +132,19 @@ public class Equipa {
         sb.append("\tNome jogadores: ");
         sb.append(list.toString()).append("\n");
         return sb.toString();
+    }
+
+    /**
+     * @brief Função equals
+     * @param o Object a ser comparado
+     * @return True se forem equipas iguais, false no caso de nao serem.
+     */
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Equipa gr = (Equipa) o;
+        return (this.nome.equals(gr.getNome()) && this.jogadores.equals(gr.getJogadores()) && this.jogadoresSuplentes.equals(gr.getJogadoresSuplentes())
+                && this.jogadoresPrincipais.equals(gr.getJogadoresPrincipais()));
     }
 
     /**
