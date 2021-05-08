@@ -6,11 +6,10 @@ import java.util.Random;
 public class Jogador {
 
     //Variáveis de Instância.
-    private String ID;
     private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse;
+    private int numeroCamisola;
     private String nomeEquipa, nome;
     private List<String> equipasAnteriores;
-    private boolean principal;
 
     //Variável de classe.
     private static final Random random = new Random();
@@ -74,13 +73,12 @@ public class Jogador {
         this.nome = "";
         this.nomeEquipa = "";
         this.equipasAnteriores = new ArrayList<>();
-        this.principal = random.nextBoolean();
     }
 
     //Construtor parametrizado.
-    public Jogador (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
-                    int remate, int capPasse, boolean principal) {
-        this.ID = ID;
+    public Jogador (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+                    int remate, int capPasse) {
+        this.numeroCamisola = numeroCamisola;
         this.velocidade = velocidade;
         this.resistencia = resistencia;
         this.destreza = destreza;
@@ -88,15 +86,14 @@ public class Jogador {
         this.jogoCabeca = jogoCabeca;
         this.remate = remate;
         this.capPasse = capPasse;
-        this.nome = new String(nome);
-        this.nomeEquipa = new String(equipa);
+        this.nome = nome;
+        this.nomeEquipa = equipa;
         this.equipasAnteriores = new ArrayList<>();
-        this.principal = principal;
     }
 
-    public Jogador (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
-                    int remate, int capPasse, boolean principal, List<String> anteriores) {
-        this.ID = ID;
+    public Jogador (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+                    int remate, int capPasse, List<String> anteriores) {
+        this.numeroCamisola = numeroCamisola;
         this.velocidade = velocidade;
         this.resistencia = resistencia;
         this.destreza = destreza;
@@ -104,17 +101,16 @@ public class Jogador {
         this.jogoCabeca = jogoCabeca;
         this.remate = remate;
         this.capPasse = capPasse;
-        this.nome = new String(nome);
-        this.nomeEquipa = new String(equipa);
+        this.nome = nome;
+        this.nomeEquipa = equipa;
         this.equipasAnteriores = new ArrayList<>();
         this.equipasAnteriores.addAll(anteriores);
-        this.principal = principal;
     }
 
 
     //Construtor que recebe objeto.
     public Jogador (Jogador j) {
-        this.ID = j.ID;
+        this.numeroCamisola = j.numeroCamisola;
         this.velocidade = j.velocidade;
         this.resistencia = j.resistencia;
         this.destreza = j.destreza;
@@ -126,7 +122,6 @@ public class Jogador {
         this.nomeEquipa = j.nomeEquipa;
         this.equipasAnteriores = new ArrayList<>(j.equipasAnteriores.size());
         this.equipasAnteriores.addAll(j.equipasAnteriores);
-        this.principal = j.isPrincipal();
     }
 
 
@@ -264,23 +259,18 @@ public class Jogador {
         this.nome = nome;
     }
 
-    /**
-     * @brief Set na informação sobre se um jogador é ou não principal.
-     * @param bool Booleano a colocar (true se for principal, false se nao for).
-     */
-    public void setPrincipal (boolean bool) {this.principal = bool;}
-
-    /**
-     * @brief Retorna informação sobre se o jogador é ou não principal.
-     * @return  true se for principal, false se nao for.
-     */
-    public boolean isPrincipal () {return this.principal;}
 
     /**
      *
-     * @return ID do Jogador.
+     * @return
      */
-    public String getID () {return this.ID;}
+    public int getNumeroCamisola() {
+        return numeroCamisola;
+    }
+
+    public void setNumeroCamisola(int numeroCamisola) {
+        this.numeroCamisola = numeroCamisola;
+    }
 
     /**
      * @brief Função toString da classe Jogador.
@@ -313,10 +303,10 @@ public class Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Jogador gr = (Jogador) o;
-        return (this.ID.equals(gr.getID()) && this.velocidade == gr.getVelocidade() && this.resistencia == gr.getResistencia() &&
+        return (this.numeroCamisola == gr.getNumeroCamisola() && this.velocidade == gr.getVelocidade() && this.resistencia == gr.getResistencia() &&
                 this.destreza == gr.getDestreza() && this.impulsao == gr.getImpulsao() && this.jogoCabeca == gr.getJogoCabeca() &&
                 this.remate == gr.getRemate() && this.capPasse == this.getCapPasse() && this.nomeEquipa.equals(gr.getNomeEquipa()) &&
-                this.nome.equals(gr.getNome()) && this.equipasAnteriores.equals(gr.getEquipasAnteriores()) && this.principal == gr.isPrincipal());
+                this.nome.equals(gr.getNome()) && this.equipasAnteriores.equals(gr.getEquipasAnteriores()));
     }
 
     /**

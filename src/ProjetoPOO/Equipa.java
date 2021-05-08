@@ -5,45 +5,27 @@ import java.util.List;
 
 public class Equipa {
     private List<Jogador> jogadores;
-    private List<Jogador> jogadoresPrincipais, jogadoresSuplentes;
     private String nome;
 
     public Equipa() {
         this.jogadores = new ArrayList<>();
-        this.jogadoresPrincipais = new ArrayList<>();
-        this.jogadoresSuplentes = new ArrayList<>();
         this.nome = "";
     }
 
     public Equipa (String nome) {
         this.jogadores = new ArrayList<>();
-        this.jogadoresPrincipais = new ArrayList<>();
-        this.jogadoresSuplentes = new ArrayList<>();
         this.nome = nome;
     }
 
-    public Equipa (List<Jogador> jogadores, List<Jogador> jogadoresPrincipais, List<Jogador> jogadoresSuplentes, String nome) {
+    public Equipa (List<Jogador> jogadores, String nome) {
         this.jogadores = new ArrayList<>();
         for (Jogador j : jogadores) this.jogadores.add(j.clone());
-
-        this.jogadoresPrincipais = new ArrayList<>();
-        for (Jogador j : jogadoresPrincipais) this.jogadoresPrincipais.add(j.clone());
-
-        this.jogadoresSuplentes = new ArrayList<>();
-        for (Jogador j : jogadoresSuplentes) this.jogadoresSuplentes.add(j.clone());
-
         this.nome = nome;
     }
 
     public Equipa (Equipa e) {
         this.jogadores = new ArrayList<>();
         this.jogadores.addAll(e.jogadores);
-
-        this.jogadoresSuplentes = new ArrayList<>();
-        this.jogadoresSuplentes.addAll(e.jogadoresSuplentes);
-
-        this.jogadoresPrincipais = new ArrayList<>();
-        this.jogadoresPrincipais.addAll(e.jogadoresPrincipais);
     }
 
     /**
@@ -53,26 +35,6 @@ public class Equipa {
     public List<Jogador> getJogadores () {
         List<Jogador> aux = new ArrayList<>();
         this.jogadores.forEach(j -> aux.add(j.clone()));
-        return aux;
-    }
-
-    /**
-     * @brief Obtem todos os jogadores principais.
-     * @return ArrayList com todos os jogadores principais.
-     */
-    public List<Jogador> getJogadoresPrincipais () {
-        List<Jogador> aux = new ArrayList<>();
-        this.jogadoresPrincipais.forEach(j -> aux.add(j.clone()));
-        return aux;
-    }
-
-    /**
-     * @brief Obtem todos os jogadores suplentes.
-     * @return ArrayList de todos os jogadores suplentes.
-     */
-    public List<Jogador> getJogadoresSuplentes () {
-        List<Jogador> aux = new ArrayList<>();
-        this.jogadoresSuplentes.forEach(j -> aux.add(j.clone()));
         return aux;
     }
 
@@ -92,10 +54,7 @@ public class Equipa {
      * Adiciona um jogador na equipa.
      * @param j Jogador a ser colocado na equipa.
      */
-    public void addJogador (Jogador j) {
-        if (j.isPrincipal()) this.jogadoresPrincipais.add(j.clone());
-        else this.jogadoresPrincipais.add(j.clone());
-
+    public void insereJogador (Jogador j) {
         this.jogadores.add(j.clone());
     }
 
@@ -104,10 +63,8 @@ public class Equipa {
      * @param j Jogador a ser removido da equipa.
      */
     public void removeJogador (Jogador j) {
-        String id = j.getID();
-        this.jogadores.removeIf(k -> (k.getID().equals(id)));
-        if (j.isPrincipal()) this.jogadoresPrincipais.removeIf(k -> k.getID().equals(id));
-        else this.jogadoresSuplentes.removeIf(k -> k.getID().equals(id));
+        int numero = j.getNumeroCamisola();
+        this.jogadores.removeIf(k -> (k.getNumeroCamisola() == numero));
     }
 
     /**
@@ -117,7 +74,7 @@ public class Equipa {
      */
     public void trocaEquipa (Equipa nova, Jogador j) {
         j.mudaEquipa(nova.getNome());
-        nova.addJogador(j.clone());
+        nova.insereJogador(j.clone());
         this.removeJogador(j);
     }
 
@@ -143,8 +100,7 @@ public class Equipa {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Equipa gr = (Equipa) o;
-        return (this.nome.equals(gr.getNome()) && this.jogadores.equals(gr.getJogadores()) && this.jogadoresSuplentes.equals(gr.getJogadoresSuplentes())
-                && this.jogadoresPrincipais.equals(gr.getJogadoresPrincipais()));
+        return (this.nome.equals(gr.getNome()) && this.jogadores.equals(gr.getJogadores()));
     }
 
     /**

@@ -11,15 +11,15 @@ public class Avancado extends Jogador {
     }
 
     //Construtor parametrizado.
-    public Avancado (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                     int jogoCabeca, int remate, int capPasse, boolean principal) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal);
+    public Avancado (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
+                     int jogoCabeca, int remate, int capPasse) {
+        super (equipa, nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
     }
 
     //Construtor parametrizado (Inclui equipas anteriores).
-    public Avancado (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                     int jogoCabeca, int remate, int capPasse, boolean principal, List<String> equipasAnteriores) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal, equipasAnteriores);
+    public Avancado (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
+                     int jogoCabeca, int remate, int capPasse, List<String> equipasAnteriores) {
+        super (equipa, nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse,equipasAnteriores);
     }
 
     //Construtor parametrizado (Recebe outro Avancado).
@@ -50,6 +50,8 @@ public class Avancado extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
+        sb.append("Nome: ").append(super.getNome()).append("\n");
+        sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
@@ -75,9 +77,9 @@ public class Avancado extends Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Avancado gr = (Avancado) o;
-        return (this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
+        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
                 && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
-                super.getCapPasse() == gr.getCapPasse() && this.getNomeEquipa().equals(gr.getNomeEquipa()) &&
+                super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
                 super.getNome().equals(gr.getNome()));
     }
 
