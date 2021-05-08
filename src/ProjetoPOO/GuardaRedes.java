@@ -17,16 +17,16 @@ public class GuardaRedes extends Jogador {
     }
 
     //Construtor parametrizado.
-    public GuardaRedes (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                        int jogoCabeca, int remate, int capPasse, boolean principal, int elasticidade) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal);
+    public GuardaRedes (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                        int jogoCabeca, int remate, int capPasse, int elasticidade) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
         this.elasticidade = elasticidade;
     }
 
     //Construtor parametrizado.
-    public GuardaRedes (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                        int jogoCabeca, int remate, int capPasse, boolean principal, int elasticidade, List<String> equipasAnteriores) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal, equipasAnteriores);
+    public GuardaRedes (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                        int jogoCabeca, int remate, int capPasse, int elasticidade, List<String> equipasAnteriores) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, equipasAnteriores);
         this.elasticidade = elasticidade;
     }
 
@@ -54,6 +54,19 @@ public class GuardaRedes extends Jogador {
                 + super.getRemate() * 0.05 + super.getCapPasse() * 0.15 + this.getElasticidade() * 0.15;
     }
 
+    public static GuardaRedes parse(String input){
+        String[] campos = input.split(",");
+        return new GuardaRedes(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]));
+    }
+
     /**
      * Função toString da subclasse GuardaRedes.
      * @return String com informação sobre guardaRedes.
@@ -62,6 +75,8 @@ public class GuardaRedes extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
+        sb.append("Nome: ").append(super.getNome()).append("\n");
+        sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
@@ -88,7 +103,7 @@ public class GuardaRedes extends Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         GuardaRedes gr = (GuardaRedes) o;
-        return (this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
+        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
                 && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
                 super.getCapPasse() == gr.getCapPasse() && this.getElasticidade() == gr.getElasticidade() && this.getNomeEquipa().equals(gr.getNomeEquipa()) &&
                 super.getNome().equals(gr.getNome()));

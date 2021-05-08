@@ -24,6 +24,7 @@ public class Equipa {
     }
 
     public Equipa (Equipa e) {
+        this.nome = e.getNome();
         this.jogadores = new ArrayList<>();
         this.jogadores.addAll(e.jogadores);
     }
@@ -55,7 +56,9 @@ public class Equipa {
      * @param j Jogador a ser colocado na equipa.
      */
     public void insereJogador (Jogador j) {
-        this.jogadores.add(j.clone());
+        Jogador aux = j.clone();
+        aux.setNomeEquipa(this.getNome());
+        this.jogadores.add(aux);
     }
 
     /**
@@ -78,6 +81,11 @@ public class Equipa {
         this.removeJogador(j);
     }
 
+
+    public static Equipa parse(String input){
+        String[] campos = input.split(",");
+        return new Equipa(campos[0]);
+    }
     /**
      * @brief Função toString da classe Equipa.
      * @return String com a informação da equipa.
@@ -85,9 +93,10 @@ public class Equipa {
     public String toString () {
         List<String> list = new ArrayList<>();
         this.getJogadores().forEach(j -> list.add(j.getNome()));
-        StringBuilder sb = new StringBuilder("Equipa: {\n");
+        StringBuilder sb = new StringBuilder("Equipa: ").append(this.getNome()).append(" {\n");
         sb.append("\tNome jogadores: ");
         sb.append(list.toString()).append("\n");
+        sb.append("}\n");
         return sb.toString();
     }
 

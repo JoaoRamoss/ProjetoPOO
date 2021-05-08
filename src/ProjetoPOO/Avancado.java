@@ -11,15 +11,15 @@ public class Avancado extends Jogador {
     }
 
     //Construtor parametrizado.
-    public Avancado (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
+    public Avancado (String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
                      int jogoCabeca, int remate, int capPasse) {
-        super (equipa, nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
+        super (nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
     }
 
     //Construtor parametrizado (Inclui equipas anteriores).
-    public Avancado (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
+    public Avancado (String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao,
                      int jogoCabeca, int remate, int capPasse, List<String> equipasAnteriores) {
-        super (equipa, nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse,equipasAnteriores);
+        super (nome, numeroCamisola, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse,equipasAnteriores);
     }
 
     //Construtor parametrizado (Recebe outro Avancado).
@@ -40,6 +40,18 @@ public class Avancado extends Jogador {
     public double overall () {
         return super.getVelocidade() * 0.25 + super.getResistencia() * 0.10 + super.getDestreza() * 0.10 + super.getImpulsao() * 0.15 + super.getJogoCabeca() * 0.15 +
                 super.getRemate() * 0.20 + super.getCapPasse() * 0.05;
+    }
+
+    public static Avancado parse(String input){
+        String[] campos = input.split(",");
+        return new Avancado(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]));
     }
 
     /**

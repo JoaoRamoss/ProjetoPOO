@@ -14,15 +14,15 @@ public class Medio extends Jogador {
         this.capRecuperacao = random.nextInt(99-75) + 75;
     }
 
-    public Medio (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                   int jogoCabeca, int remate, int capPasse, boolean principal, int capRecuperacao) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal);
+    public Medio (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                   int jogoCabeca, int remate, int capPasse, int capRecuperacao) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
         this.capRecuperacao = capRecuperacao;
     }
 
-    public Medio (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                  int jogoCabeca, int remate, int capPasse, boolean principal, int capRecuperacao, List <String> equipasAnteriores) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal, equipasAnteriores);
+    public Medio (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                  int jogoCabeca, int remate, int capPasse, int capRecuperacao, List <String> equipasAnteriores) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, equipasAnteriores);
         this.capRecuperacao = capRecuperacao;
     }
 
@@ -49,6 +49,19 @@ public class Medio extends Jogador {
                 super.getJogoCabeca() * 0.25 + super.getRemate() * 0.05 + super.getCapPasse() * 0.10;
     }
 
+    public static Medio parse(String input){
+        String[] campos = input.split(",");
+        return new Medio(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]));
+    }
+
     /**
      * Função toString da subclasse Medio.
      * @return String com informação do Médio.
@@ -57,6 +70,8 @@ public class Medio extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
+        sb.append("Nome: ").append(super.getNome()).append("\n");
+        sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
@@ -83,7 +98,7 @@ public class Medio extends Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Medio gr = (Medio) o;
-        return (this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
+        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
                 && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
                 super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
                 super.getNome().equals(gr.getNome()) && this.getCapRecuperacao() == gr.getCapRecuperacao());

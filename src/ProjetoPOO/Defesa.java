@@ -11,15 +11,15 @@ public class Defesa extends Jogador {
     }
 
     //Construtor parametrizado.
-    public Defesa (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                     int jogoCabeca, int remate, int capPasse, boolean principal) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal);
+    public Defesa (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                     int jogoCabeca, int remate, int capPasse) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
     }
 
     //Construtor parametrizado (Inclui equipas anteriores).
-    public Defesa (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                   int jogoCabeca, int remate, int capPasse, boolean principal, List<String> equipasAnteriores) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal, equipasAnteriores);
+    public Defesa (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                   int jogoCabeca, int remate, int capPasse, List<String> equipasAnteriores) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, equipasAnteriores);
     }
 
     //Construtor parametrizado (Recebe outro defesa).
@@ -42,6 +42,18 @@ public class Defesa extends Jogador {
                 super.getJogoCabeca() * 0.25 + super.getRemate() * 0.05 + super.getCapPasse() * 0.10;
     }
 
+
+    public static Defesa parse(String input){
+        String[] campos = input.split(",");
+        return new Defesa(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]));
+    }
     /**
      * Função toString da subclasse Defesa
      * @return String com informação sobre o Defesa.
@@ -50,6 +62,8 @@ public class Defesa extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
+        sb.append("Nome: ").append(super.getNome()).append("\n");
+        sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
@@ -75,7 +89,7 @@ public class Defesa extends Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Defesa gr = (Defesa) o;
-        return (this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
+        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
                 && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
                 super.getCapPasse() == gr.getCapPasse() && this.getNomeEquipa().equals(gr.getNomeEquipa()) &&
                 super.getNome().equals(gr.getNome()));

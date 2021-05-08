@@ -15,15 +15,15 @@ public class Lateral extends Jogador {
         this.cruzamento = random.nextInt(99-75) + 75;
     }
 
-    public Lateral (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                  int jogoCabeca, int remate, int capPasse, boolean principal, int cruzamento) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal);
+    public Lateral (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                  int jogoCabeca, int remate, int capPasse, int cruzamento) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse);
         this.cruzamento = cruzamento;
     }
 
-    public Lateral (String ID, String nome, String equipa, int velocidade, int resistencia, int destreza, int impulsao,
-                    int jogoCabeca, int remate, int capPasse, boolean principal, int cruzamento, List<String> equipasAnteriores) {
-        super (ID, nome, equipa, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, principal, equipasAnteriores);
+    public Lateral (String nome, int numeroC, int velocidade, int resistencia, int destreza, int impulsao,
+                    int jogoCabeca, int remate, int capPasse, int cruzamento, List<String> equipasAnteriores) {
+        super (nome, numeroC, velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse, equipasAnteriores);
         this.cruzamento = cruzamento;
     }
 
@@ -50,6 +50,19 @@ public class Lateral extends Jogador {
                 super.getRemate() * 0.10 + super.getCapPasse() * 0.10 + this.cruzamento * 0.15;
     }
 
+    public static Lateral parse(String input){
+        String[] campos = input.split(",");
+        return new Lateral(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]));
+    }
+
     /**
      * Função toString da subclasse Lateral.
      * @return  String com informação sobre Lateral.
@@ -58,6 +71,8 @@ public class Lateral extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
+        sb.append("Nome: ").append(super.getNome()).append("\n");
+        sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
         else
@@ -84,7 +99,7 @@ public class Lateral extends Jogador {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Lateral gr = (Lateral) o;
-        return (this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
+        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
                 && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
                 super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
                 super.getNome().equals(gr.getNome()) && this.getCruzamento() == gr.getCruzamento());

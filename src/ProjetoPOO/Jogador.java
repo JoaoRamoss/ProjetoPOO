@@ -76,7 +76,7 @@ public class Jogador {
     }
 
     //Construtor parametrizado.
-    public Jogador (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+    public Jogador (String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
                     int remate, int capPasse) {
         this.numeroCamisola = numeroCamisola;
         this.velocidade = velocidade;
@@ -86,12 +86,12 @@ public class Jogador {
         this.jogoCabeca = jogoCabeca;
         this.remate = remate;
         this.capPasse = capPasse;
+        this.nomeEquipa = "";
         this.nome = nome;
-        this.nomeEquipa = equipa;
         this.equipasAnteriores = new ArrayList<>();
     }
 
-    public Jogador (String equipa, String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
+    public Jogador (String nome, int numeroCamisola, int velocidade, int resistencia, int destreza, int impulsao, int jogoCabeca,
                     int remate, int capPasse, List<String> anteriores) {
         this.numeroCamisola = numeroCamisola;
         this.velocidade = velocidade;
@@ -102,7 +102,7 @@ public class Jogador {
         this.remate = remate;
         this.capPasse = capPasse;
         this.nome = nome;
-        this.nomeEquipa = equipa;
+        this.nomeEquipa = "";
         this.equipasAnteriores = new ArrayList<>();
         this.equipasAnteriores.addAll(anteriores);
     }
@@ -232,6 +232,8 @@ public class Jogador {
     public String getNomeEquipa () {
         return this.nomeEquipa;
     }
+
+    public void setNomeEquipa (String nome) {this.nomeEquipa = nome;}
 
     public List<String> getEquipasAnteriores () {return this.equipasAnteriores;}
 
