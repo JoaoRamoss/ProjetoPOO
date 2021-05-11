@@ -103,9 +103,9 @@ public class Jogo {
 
     public String toString () {
         StringBuilder sb = new StringBuilder();
-        sb.append("Jogo: {\n");
-        sb.append("\t").append(this.equipaCasa).append(" vs ").append(this.equipaFora).append("\n");
+        sb.append("Jogo: ").append("| ").append(this.equipaCasa).append(" | vs | ").append(this.equipaFora).append(" |").append(" {\n");
         sb.append("\tData: ").append(this.date).append("\n");
+        sb.append("\tScore: ").append(this.golosCasa).append("-").append(this.golosFora).append("\n");
         sb.append("}\n");
 
         return sb.toString();
