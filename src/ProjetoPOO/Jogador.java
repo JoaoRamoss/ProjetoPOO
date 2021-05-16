@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Jogador {
+public abstract class Jogador {
 
     //Variáveis de Instância.
     private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse;
@@ -278,42 +278,11 @@ public class Jogador {
      * @brief Função toString da classe Jogador.
      * @return String com a informação sobre o jogador.
      */
-    public String toString () {
-        StringBuilder sb = new StringBuilder("Jogador: ");
-        sb.append(this.getNome()).append("\n");
-        sb.append("Equipa: ").append(this.getNomeEquipa()).append("\n");
-        if(this.getEquipasAnteriores().isEmpty())
-            sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
-        else
-            sb.append("Equipas anteriores: ").append(this.getEquipasAnteriores().toString()).append("\n");
-        sb.append("\nResistência: ").append(this.getResistencia());
-        sb.append("\nVelocidade: ").append(this.getVelocidade());
-        sb.append("\nDestreza: ").append(this.getDestreza());
-        sb.append("\nImpulsao: ").append(this.getImpulsao());
-        sb.append("\nJogo de cabeça: ").append(this.getJogoCabeca());
-        sb.append("\nRemate: ").append(this.getRemate());
-        sb.append("\nCapacidade de passe: ").append(this.getCapPasse());
-        return sb.toString();
-    }
+    public abstract double overall();
 
-    /**
-     * @brief Função equals da classe jogador.
-     * @param o Object a comparar
-     * @return True se forem iguais, false se não forem.
-     */
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        Jogador gr = (Jogador) o;
-        return (this.numeroCamisola == gr.getNumeroCamisola() && this.velocidade == gr.getVelocidade() && this.resistencia == gr.getResistencia() &&
-                this.destreza == gr.getDestreza() && this.impulsao == gr.getImpulsao() && this.jogoCabeca == gr.getJogoCabeca() &&
-                this.remate == gr.getRemate() && this.capPasse == this.getCapPasse() && this.nomeEquipa.equals(gr.getNomeEquipa()) &&
-                this.nome.equals(gr.getNome()) && this.equipasAnteriores.equals(gr.getEquipasAnteriores()));
-    }
+    public abstract String toString ();
 
-    /**
-     * @brief Funçao clone da classe Jogador.
-     * @return  Um jogador novo.
-     */
-    public Jogador clone () {return new Jogador (this);}
+    public abstract boolean equals (Object o);
+
+    public abstract Jogador clone ();
 }
