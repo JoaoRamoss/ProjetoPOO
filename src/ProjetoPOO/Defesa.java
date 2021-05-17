@@ -58,11 +58,10 @@ public class Defesa extends Jogador {
      * Função toString da subclasse Defesa
      * @return String com informação sobre o Defesa.
      */
-    @Override public String toString () {
+    public String toString () {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
-        sb.append("Nome: ").append(super.getNome()).append("\n");
         sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
@@ -85,19 +84,16 @@ public class Defesa extends Jogador {
      * @param o Object a comparar
      * @return  True se forem iguais, false se não forem.
      */
-    @Override public boolean equals (Object o) {
+    public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Defesa gr = (Defesa) o;
-        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
-                && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
-                super.getCapPasse() == gr.getCapPasse() && this.getNomeEquipa().equals(gr.getNomeEquipa()) &&
-                super.getNome().equals(gr.getNome()));
+        return (super.equals(gr) && this.getPosicao().equals(gr.getPosicao()));
     }
 
     /**
      * Função clone da subclasse Defesa
      * @return Novo Defesa.
      */
-    @Override public Defesa clone () {return new Defesa (this);}
+    public Defesa clone () {return new Defesa (this);}
 }

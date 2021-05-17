@@ -282,7 +282,15 @@ public abstract class Jogador {
 
     public abstract String toString ();
 
-    public abstract boolean equals (Object o);
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Jogador gr = (Jogador) o;
+        return (this.getNumeroCamisola() == gr.getNumeroCamisola() && this.getVelocidade() == gr.getVelocidade() && this.getResistencia() == gr.getResistencia()
+                && this.getDestreza() == gr.getDestreza() && this.getImpulsao() == gr.getImpulsao() && this.getJogoCabeca() == gr.getJogoCabeca() &&
+                this.getCapPasse() == gr.getCapPasse() && this.getNomeEquipa().equals(gr.getNomeEquipa()) &&
+                this.getNome().equals(gr.getNome()));
+    }
 
     public abstract Jogador clone ();
 }

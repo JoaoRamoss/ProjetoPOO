@@ -62,7 +62,6 @@ public class Avancado extends Jogador {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
-        sb.append("Nome: ").append(super.getNome()).append("\n");
         sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
@@ -85,14 +84,11 @@ public class Avancado extends Jogador {
      * @param o Object a comparar
      * @return True no caso de serem iguais, false no caso de nao serem.
      */
-    @Override public boolean equals (Object o) {
+    public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Avancado gr = (Avancado) o;
-        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
-                && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
-                super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
-                super.getNome().equals(gr.getNome()));
+        return (super.equals(gr) && this.getPosicao().equals(gr.getPosicao()));
     }
 
     /**

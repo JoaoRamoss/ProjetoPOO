@@ -67,11 +67,10 @@ public class Lateral extends Jogador {
      * Função toString da subclasse Lateral.
      * @return  String com informação sobre Lateral.
      */
-    @Override public String toString () {
+    public String toString () {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
-        sb.append("Nome: ").append(super.getNome()).append("\n");
         sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
@@ -95,19 +94,16 @@ public class Lateral extends Jogador {
      * @param o Object a comparar
      * @return true se forem iguais, false se não forem.
      */
-    @Override public boolean equals (Object o) {
+    public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Lateral gr = (Lateral) o;
-        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
-                && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
-                super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
-                super.getNome().equals(gr.getNome()) && this.getCruzamento() == gr.getCruzamento());
+        return (super.equals(gr) && this.getPosicao().equals(gr.getPosicao()) && this.getCruzamento() == gr.getCruzamento());
     }
 
     /**
      * Função clone da subclasse Lateral.
      * @return Novo Lateral.
      */
-    @Override public Lateral clone () {return new Lateral(this);}
+    public Lateral clone () {return new Lateral(this);}
 }

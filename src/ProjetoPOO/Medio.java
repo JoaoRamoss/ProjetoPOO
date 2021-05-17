@@ -66,11 +66,10 @@ public class Medio extends Jogador {
      * Função toString da subclasse Medio.
      * @return String com informação do Médio.
      */
-    @Override public String toString () {
+    public String toString () {
         StringBuilder sb = new StringBuilder("Jogador: ");
         sb.append(super.getNome()).append("\n");
         sb.append("Equipa: ").append(super.getNomeEquipa()).append("\n");
-        sb.append("Nome: ").append(super.getNome()).append("\n");
         sb.append("Numero da camisola: ").append(super.getNumeroCamisola()).append("\n");
         if(super.getEquipasAnteriores().isEmpty())
             sb.append("Equipas anteriores: Sem historial noutras equipas").append("\n");
@@ -94,19 +93,16 @@ public class Medio extends Jogador {
      * @param o Object a comparar
      * @return true se forem iguais, false se nao forem.
      */
-    @Override public boolean equals (Object o) {
+    public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Medio gr = (Medio) o;
-        return (super.getNumeroCamisola() == gr.getNumeroCamisola() && this.getPosicao().equals(gr.getPosicao()) && super.getVelocidade() == gr.getVelocidade() && super.getResistencia() == gr.getResistencia()
-                && super.getDestreza() == gr.getDestreza() && super.getImpulsao() == gr.getImpulsao() && super.getJogoCabeca() == gr.getJogoCabeca() &&
-                super.getCapPasse() == gr.getCapPasse() && super.getNomeEquipa().equals(gr.getNomeEquipa()) &&
-                super.getNome().equals(gr.getNome()) && this.getCapRecuperacao() == gr.getCapRecuperacao());
+        return (super.equals(gr) && this.getPosicao().equals(gr.getPosicao()) && this.getCapRecuperacao() == gr.getCapRecuperacao());
     }
 
     /**
      * Função clone da subclasse Medio
      * @return novo Medio.
      */
-    @Override public Medio clone () {return new Medio(this);}
+    public Medio clone () {return new Medio(this);}
 }
