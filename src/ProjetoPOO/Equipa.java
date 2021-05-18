@@ -1,41 +1,45 @@
 package ProjetoPOO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Equipa {
-    private List<Jogador> jogadores;
+    private Map<Integer, Jogador> jogadores;
     private String nome;
 
     public Equipa() {
-        this.jogadores = new ArrayList<>();
+        this.jogadores = new HashMap<>();
         this.nome = "";
     }
 
     public Equipa (String nome) {
-        this.jogadores = new ArrayList<>();
+        this.jogadores = new HashMap<>();
         this.nome = nome;
     }
 
     public Equipa (List<Jogador> jogadores, String nome) {
-        this.jogadores = new ArrayList<>();
-        for (Jogador j : jogadores) this.jogadores.add(j.clone());
+        this.jogadores = new HashMap<>();
+        for (Jogador j : jogadores) this.jogadores.put(j.getNumeroCamisola(), j.clone());
         this.nome = nome;
     }
 
     public Equipa (Equipa e) {
         this.nome = e.getNome();
-        this.jogadores = new ArrayList<>();
-        this.jogadores.addAll(e.jogadores);
+        this.jogadores = new HashMap<>();
+        for (Jogador j : e.getJogadores().values()) {
+            this.jogadores.put(j.getNumeroCamisola(), j.clone());
+        }
     }
 
     /**
      * @brief Getter de todos os jogadores na equipa.
      * @return ArrayList com todos os jogadores.
      */
-    public List<Jogador> getJogadores () {
-        List<Jogador> aux = new ArrayList<>();
-        this.jogadores.forEach(j -> aux.add(j.clone()));
+    public Map<Integer, Jogador> getJogadores () {
+        Map<Integer, Jogador> aux = new HashMap<>();
+        this.jogadores.forEach((k, v) -> aux.put(k, v.clone()));
         return aux;
     }
 
@@ -58,7 +62,7 @@ public class Equipa {
     public void insereJogador (Jogador j) {
         Jogador aux = j.clone();
         aux.setNomeEquipa(this.getNome());
-        this.jogadores.add(aux);
+        this.jogadores.put(aux.getNumeroCamisola(), aux);
     }
 
     /**
@@ -67,7 +71,7 @@ public class Equipa {
      */
     public void removeJogador (Jogador j) {
         int numero = j.getNumeroCamisola();
-        this.jogadores.removeIf(k -> (k.getNumeroCamisola() == numero));
+        this.jogadores.remove(numero);
     }
 
     /**
@@ -92,10 +96,11 @@ public class Equipa {
      */
     public String toString () {
         List<String> list = new ArrayList<>();
-        this.getJogadores().forEach(j -> list.add(j.getNome()));
+        this.getJogadores().values().forEach(j -> list.add(j.getNome()));
         StringBuilder sb = new StringBuilder("Equipa: ").append(this.getNome()).append(" {\n");
-        sb.append("\tNome jogadores: ");
-        sb.append(list.toString()).append("\n");
+        sb.append("\tJogadores: \n");
+        for (String j : list)
+            sb.append("\t").append(j).append("\n");
         sb.append("}\n");
         return sb.toString();
     }
