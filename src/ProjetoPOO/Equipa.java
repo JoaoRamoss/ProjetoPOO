@@ -95,12 +95,12 @@ public class Equipa {
      * @return String com a informação da equipa.
      */
     public String toString () {
-        List<String> list = new ArrayList<>();
-        this.getJogadores().values().forEach(j -> list.add(j.getNome()));
+        List<Jogador> list = new ArrayList<>();
+        this.getJogadores().values().forEach(j -> list.add(j.clone()));
         StringBuilder sb = new StringBuilder("Equipa: ").append(this.getNome()).append(" {\n");
         sb.append("\tJogadores: \n");
-        for (String j : list)
-            sb.append("\t").append(j).append("\n");
+        for (Jogador j : list)
+            sb.append("\t").append(j.getNome()).append(" (").append(j.getNumeroCamisola()).append(")").append("\n");
         sb.append("}\n");
         return sb.toString();
     }

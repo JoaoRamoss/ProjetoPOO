@@ -1,11 +1,12 @@
 package ProjetoPOO;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu extends Exception{
     private static boolean continuar = true;
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void menuPrincipal() throws LinhaIncorretaException {
+    public static void menuPrincipal() throws LinhaIncorretaException, EquipaOuJogInvalidoException {
         StoredData d = new StoredData();
         d = Parser.parse();
         StringBuilder sb = new StringBuilder("Menu principal: \n");
@@ -23,9 +24,17 @@ public class Menu extends Exception{
             scanner.nextLine();
             switch (scan) {
                 case 1 -> {
+                    String resposta = "";
                     System.out.print("Que equipa pretendes consultar? ");
-                    String resposta = scanner.nextLine();
-                    System.out.println(d.getEquipas().get(resposta).toString());
+                    try {
+                        resposta = scanner.nextLine();
+                    }
+                    catch(InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    finally {
+                        System.out.println(d.getEquipas().get(resposta).toString());
+                    }
                 }
                 case 2 -> System.out.println(execOnData.showEquipas(d));
                 case 3 -> System.out.println(execOnData.showJogadores(d));
