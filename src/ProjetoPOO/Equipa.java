@@ -90,6 +90,17 @@ public class Equipa {
         String[] campos = input.split(",");
         return new Equipa(campos[0]);
     }
+
+    public double overall() {
+        double sum = 0;
+        int tot = 0;
+        for (Jogador j : this.jogadores.values()) {
+            sum += j.overall();
+            tot++;
+        }
+        return sum/tot;
+    }
+
     /**
      * @brief Função toString da classe Equipa.
      * @return String com a informação da equipa.
@@ -102,6 +113,7 @@ public class Equipa {
         for (Jogador j : list)
             sb.append("\t").append(j.getNome()).append(" (").append(j.getNumeroCamisola()).append(")").append("\n");
         sb.append("}\n");
+        sb.append("Overall: ").append(this.overall()).append("\n");
         return sb.toString();
     }
 

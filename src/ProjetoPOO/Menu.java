@@ -15,6 +15,7 @@ public class Menu extends Exception{
             sb.append("3: Lista de Jogadores. \n");
             sb.append("4: Lista de Jogos.\n");
             sb.append("5: Troca um jogador de equipa.\n");
+            sb.append("6: Consultar Jogador.\n");
             sb.append("0: Sair.\n");
             sb.append("Escreve a opcao: ");
         while (true) {
@@ -33,13 +34,19 @@ public class Menu extends Exception{
                         System.out.println(e.getMessage());
                     }
                     finally {
-                        System.out.println(d.getEquipas().get(resposta).toString());
+                        try {
+                            System.out.println(d.getEquipas().get(resposta).toString());
+                        }
+                        catch(NullPointerException e) {
+                            System.out.println("A equipa \"" + resposta + "\" não existe.\n");
+                        }
                     }
                 }
-                case 2 -> System.out.println(execOnData.showEquipas(d));
-                case 3 -> System.out.println(execOnData.showJogadores(d));
-                case 4 -> System.out.println(execOnData.showJogos(d));
-                case 5 -> execOnData.trocaJogador(d);
+                case 2 -> System.out.println(d.showEquipas());
+                case 3 -> System.out.println(d.showJogadores());
+                case 4 -> System.out.println(d.showJogos());
+                case 5 -> d.trocaJogador();
+                case 6 -> System.out.println(d.consultarJogador());
                 case 0 -> System.exit(0);
                 default -> scan = scanner.nextInt();
             }
