@@ -34,9 +34,10 @@ public class StoredData {
         equipas.forEach((k,v) -> this.equipas.put(k, v.clone()));
     }
 
-    public static Map<String, Equipa> trocaEquipas (String antiga, String nova, StoredData d, Jogador j) {
+    public static Map<String, Equipa> trocaEquipas (String antiga, String nova, StoredData d, Jogador j, int number) {
         Map<String, Equipa> eq = new HashMap<>();
         eq = d.getEquipas();
+        j.setNumeroCamisola(number);
         eq.get(antiga).trocaEquipa(eq.get(nova), j);
         return eq;
     }
@@ -80,42 +81,68 @@ public class StoredData {
             }
             strB.append("}\n");
         } catch (NullPointerException e) {
-            throw new EquipaOuJogInvalidoException("Equipa \"" + nome + "\" não é uma equipa válida");
+            throw new EquipaOuJogInvalidoException("A equipa \"" + nome + "\" não é uma equipa válida");
         }
         return strB.toString();
     }
 
         public void trocaJogador () throws EquipaOuJogInvalidoException {
-
+        Random random = new Random();
         String antiga = "", nova = "";
         Equipa equipaAntiga, equipaNova;
         StringBuilder sb = new StringBuilder();
+        boolean passes = false;
         System.out.print("A que equipa pertence o jogador que quer trocar? ");
-        try {
+        Equipa temp;
+        while(!passes) {
+            passes = true;
             antiga = scanner.nextLine();
+            if (!this.equipas.containsKey(antiga)) {
+                passes = false;
+                System.out.println("A equipa inserida é inválida. Tenta novamente: ");
+            }
         }
-        catch(InputMismatchException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            equipaAntiga = this.getEquipas().get(antiga);
-        }
-        if (equipaAntiga == null) throw new EquipaOuJogInvalidoException("Equipa \"" + antiga + "\" não é uma equipa válida.");
         System.out.print("Para que equipa deseja trocar o jogador? ");
-        try {
+        passes = false;
+        while(!passes) {
+            passes = true;
             nova = scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println(e.getMessage());
+            if (!this.equipas.containsKey(nova)) {
+                System.out.println("Equipa inserida não é uma equipa válida. Tenta novamente: ");
+                passes = false;
+            }
         }
-        finally {
-            equipaNova = this.getEquipas().get(nova);
-            System.out.println("Eis a lista de jogadores pertencentes à equipa " + antiga + ": ");
-            System.out.println(this.showJogadoresEquipa(antiga));
-        }
-        if (equipaNova == null) throw new EquipaOuJogInvalidoException("Equipa \"" + nova + "\" não é uma equipa válida.");
+        System.out.println("Eis a lista de jogadores pertencentes à equipa " + antiga + ": ");
+        System.out.println(this.showJogadoresEquipa(antiga));
         System.out.print("Qual é o número do jogador que pretende trocar? ");
-        int numero = scanner.nextInt();
-        Map<String, Equipa> updatedEquipas = trocaEquipas(antiga, nova,  this, this.getEquipas().get(antiga).getJogadores().get(numero));
+        int numero = 0;
+        passes = false;
+        while(!passes) {
+            try {
+                passes = true;
+                numero = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Argumento inserido tem de ser um número inteiro. Tenta novamente: ");
+                passes = false;
+            }
+        }
+        int finalNumero = numero;
+        int newNumber = numero;
+        if (this.equipas.get(nova).getJogadores().values().stream().anyMatch(j -> j.getNumeroCamisola() == finalNumero)) {
+            boolean rep = true;
+            while (rep) {
+                rep = false;
+                newNumber = random.nextInt(100);
+                for (Jogador j : this.equipas.get(nova).getJogadores().values()) {
+                    if (j.getNumeroCamisola() == newNumber) {
+                        rep = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        Map<String, Equipa> updatedEquipas = trocaEquipas(antiga, nova,  this, this.getEquipas().get(antiga).getJogadores().get(numero), newNumber);
         this.setEquipas(updatedEquipas);
         scanner.nextLine();
         System.out.println("Jogador trocado com sucesso.\n");
@@ -141,27 +168,79 @@ public class StoredData {
         String equipa = "";
         String res = "";
         System.out.println("A que equipa pertence o jogador? ");
-        try {
-            equipa = scanner.nextLine();
-            System.out.println(showJogadoresEquipa(equipa));
-        } catch (NullPointerException e) {
-            throw new EquipaOuJogInvalidoException("Equipa Inválida.");
+        boolean passed = false;
+        while (!passed) {
+            try {
+                passed = true;
+                equipa = scanner.nextLine();
+                this.equipas.get(equipa).getNome(); //Verifica se a equipa existe.
+            } catch (NullPointerException e) {
+                System.out.println("\"" + equipa + "\" não é uma equipa válida. Por favor tente novamente: ");
+                passed = false;
+            }
+            finally {
+                if (passed) {
+                    System.out.println(showJogadoresEquipa(equipa));
+                    passed = true;
+                }
+            }
         }
         System.out.println("Insere o numero do jogador: ");
-        int numero;
-        try {
-            numero = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            throw new EquipaOuJogInvalidoException("Argumento inserido tem de ser um número inteiro.");
+        passed = false;
+        int numero = -1;
+        while (!passed) {
+            try {
+                passed = true;
+                numero = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("O input deverá ser um número inteiro. Tente novamente:");
+                passed = false;
+            }
+            if (passed)
+                try {
+                    res = this.equipas.get(equipa).getJogadores().get(numero).clone().toString();
+                }
+                catch (NullPointerException e) {
+                    System.out.println("O número introduzido não corresponde a um jogador nesta equipa. Tente novamente:");
+                    passed = false;
+                }
+            scanner.nextLine();
         }
-        try {
-            res = this.equipas.get(equipa).getJogadores().get(numero).clone().toString();
-        }
-        catch(NullPointerException e) {
-            throw new EquipaOuJogInvalidoException("Número de jogador inválido.");
-        }
-        scanner.nextLine();
         return res;
+    }
+
+    public String resultadoJogo() {
+        String casa = "";
+        String visitante = "";
+        Jogo play = null;
+        System.out.println("Insere o nome da equipa da casa: ");
+        boolean passes = false;
+        while(!passes) {
+            casa = scanner.nextLine();
+            for (Jogo j : this.jogos)
+                if (j.getEquipaCasa().equals(casa)) {
+                    passes = true;
+                    break;
+                }
+            if (!passes)
+                System.out.println("Equipa inserida é inválida. Tenta novamente: ");
+            System.out.println("Insere a equipa visitante: ");
+            visitante = scanner.nextLine();
+            for (Jogo j : this.jogos) {
+                if (j.getEquipaCasa().equals(casa) && j.getEquipaFora().equals(visitante)) {
+                    passes = true;
+                    play = new Jogo(j);
+                    break;
+                }
+                else {
+                    passes = false;
+                }
+            }
+            if (!passes) {
+                System.out.println("Não existe nenhum jogo com essas equipas. Tenta inserir as duas equipas de novo: ");
+            }
+        }
+        return play.getResultado(this);
     }
 
     public StoredData clone () {return new StoredData(this);}

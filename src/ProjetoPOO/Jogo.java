@@ -111,5 +111,28 @@ public class Jogo {
         return sb.toString();
     }
 
+    public String getResultado(StoredData d) {
+        Equipa auxCasa = d.getEquipas().get(this.equipaCasa);
+        Equipa principalCasa = new Equipa(this.equipaCasa);
+        for (int i : this.jogadoresCasa) {
+            principalCasa.insereJogador(auxCasa.getJogadores().get(i));
+        }
+        Equipa auxFora = d.getEquipas().get(this.equipaFora);
+        Equipa principalFora = new Equipa(this.equipaFora);
+        for (int i : this.jogadoresFora) {
+            principalFora.insereJogador(auxFora.getJogadores().get(i));
+        }
+
+        double probCasa, probFora;
+        probCasa = principalCasa.overall() * wishMeLuck() + 5;
+        probFora = principalFora.overall() * wishMeLuck();
+        if (golosCasa > golosFora) probCasa += 2;
+        else probFora += 2;
+        System.out.println("pribvassa " + probCasa + "provdae" + probFora);
+        return "dfsfg";
+    }
+
+    private double wishMeLuck () {return Math.random();}
+
     public Jogo clone () {return new Jogo(this);}
 }
