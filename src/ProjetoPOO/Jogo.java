@@ -1,13 +1,14 @@
 package ProjetoPOO;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Jogo {
+public class Jogo implements Serializable {
     private String equipaCasa;
     private String equipaFora;
     private int golosCasa, golosFora;
@@ -15,7 +16,7 @@ public class Jogo {
     private List<Integer> jogadoresCasa;
     private List<Integer> jogadoresFora;
     Map<Integer, Integer> substituicoesCasa = new HashMap<>();
-    Map<Integer, Integer> substitucoesFora = new HashMap<>();
+    Map<Integer, Integer> substituicoesFora = new HashMap<>();
 
     public Jogo (String ec, String ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         this.equipaCasa = ec;
@@ -26,7 +27,7 @@ public class Jogo {
         this.jogadoresCasa = new ArrayList<>(jc);
         this.jogadoresFora = new ArrayList<>(jf);
         this.substituicoesCasa = new HashMap<>(sc);
-        this.substitucoesFora = new HashMap<>(sf);
+        this.substituicoesFora = new HashMap<>(sf);
     }
 
     public Jogo (Jogo j) {
@@ -37,7 +38,7 @@ public class Jogo {
         this.date = j.getDate();
         this.jogadoresCasa = j.getJogadoresCasa();
         this.jogadoresFora = j.getJogadoresFora();
-        this.substitucoesFora = j.getSubstitucoesFora();
+        this.substituicoesFora = j.getSubstitucoesFora();
         this.substituicoesCasa = j.getSubstituicoesCasa();
     }
 
@@ -90,7 +91,7 @@ public class Jogo {
     }
 
     public Map<Integer, Integer> getSubstitucoesFora() {
-        return this.substitucoesFora;
+        return this.substituicoesFora;
     }
 
     public Map<Integer, Integer> getSubstituicoesCasa() {
@@ -111,28 +112,22 @@ public class Jogo {
         return sb.toString();
     }
 
-    public String getResultado(StoredData d) {
-        Equipa auxCasa = d.getEquipas().get(this.equipaCasa);
-        Equipa principalCasa = new Equipa(this.equipaCasa);
-        for (int i : this.jogadoresCasa) {
-            principalCasa.insereJogador(auxCasa.getJogadores().get(i));
-        }
-        Equipa auxFora = d.getEquipas().get(this.equipaFora);
-        Equipa principalFora = new Equipa(this.equipaFora);
-        for (int i : this.jogadoresFora) {
-            principalFora.insereJogador(auxFora.getJogadores().get(i));
-        }
+    public static void run () {
+        int mins = 0;
 
-        double probCasa, probFora;
-        probCasa = principalCasa.overall() * wishMeLuck() + 5;
-        probFora = principalFora.overall() * wishMeLuck();
-        if (golosCasa > golosFora) probCasa += 2;
-        else probFora += 2;
-        System.out.println("pribvassa " + probCasa + "provdae" + probFora);
-        return "dfsfg";
     }
 
-    private double wishMeLuck () {return Math.random();}
+    private void substituicaoCasa(StoredData d, Equipa e, int numero) {
+        e.removeJogador(e.getJogadores().get(numero));
+        e.insereJogador(d.getEquipas().get(this.equipaCasa).getJogadores().get(this.substituicoesCasa.get(numero)));
+        System.out.println("Substituição: " + numero + "-> " + this.substituicoesCasa.get(numero));
+    }
+
+    private void substituicaoFora(StoredData d, Equipa e, int numero) {
+        e.removeJogador(e.getJogadores().get(numero));
+        e.insereJogador(d.getEquipas().get(this.equipaFora).getJogadores().get(this.substituicoesFora.get(numero)));
+        System.out.println("Substituição: " + numero + "-> " + this.substituicoesFora.get(numero));
+    }
 
     public Jogo clone () {return new Jogo(this);}
 }

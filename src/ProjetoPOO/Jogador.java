@@ -1,9 +1,11 @@
 package ProjetoPOO;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Jogador {
+public abstract class Jogador implements Serializable {
 
     //Variáveis de Instância.
     private int velocidade, resistencia, destreza, impulsao, jogoCabeca, remate, capPasse;
@@ -281,6 +283,8 @@ public abstract class Jogador {
     public abstract double overall();
 
     public abstract String toString ();
+
+    public abstract String getPosicao();
 
     public boolean equals (Object o) {
         if (this == o) return true;

@@ -1,11 +1,10 @@
 package ProjetoPOO;
 
-import java.util.Map;
+import java.io.Serializable;
 
-public class Main {
+public class Main implements Serializable {
 
     public static void main(String[] args) throws Exception {
         Menu.menuPrincipal();
-        //Parser.parse();
     }
 }

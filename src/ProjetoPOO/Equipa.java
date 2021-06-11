@@ -1,11 +1,11 @@
 package ProjetoPOO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class Equipa {
+public class Equipa implements Serializable {
     private Map<Integer, Jogador> jogadores;
     private String nome;
 
@@ -127,6 +127,28 @@ public class Equipa {
         if (o == null || this.getClass() != o.getClass()) return false;
         Equipa gr = (Equipa) o;
         return (this.nome.equals(gr.getNome()) && this.jogadores.equals(gr.getJogadores()));
+    }
+
+    public List<Jogador> getTop (String posicao) throws Exception{
+        Comparator<Jogador> t = (e1, e2) -> (int) e2.overall() - (int) e1.overall();
+        switch (posicao) {
+            case "Avancado" -> {
+                return this.jogadores.values().stream().filter(e -> e.getClass().getSimpleName().equals("Avancado")).sorted(t).collect(Collectors.toList());
+            }
+            case "Defesa" -> {
+                return this.jogadores.values().stream().filter(e -> e.getClass().getSimpleName().equals("Defesa")).sorted(t).collect(Collectors.toList());
+            }
+            case "Medio" -> {
+                return this.jogadores.values().stream().filter(e -> e.getClass().getSimpleName().equals("Medio")).sorted(t).collect(Collectors.toList());
+            }
+            case "Lateral" -> {
+                return this.jogadores.values().stream().filter(e -> e.getClass().getSimpleName().equals("Lateral")).sorted(t).collect(Collectors.toList());
+            }
+            case "GuardaRedes" -> {
+                return this.jogadores.values().stream().filter(e -> e.getClass().getSimpleName().equals("GuardaRedes")).sorted(t).collect(Collectors.toList());
+            }
+            default -> throw new Exception("Posição inserida não é válida.");
+        }
     }
 
     /**

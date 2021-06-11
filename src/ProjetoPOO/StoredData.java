@@ -1,8 +1,10 @@
 package ProjetoPOO;
 
+import javax.management.PersistentMBean;
+import java.io.*;
 import java.util.*;
 
-public class StoredData {
+public class StoredData implements Serializable {
     private Map<String, Equipa> equipas;
     private List<Jogo> jogos;
 
@@ -209,6 +211,576 @@ public class StoredData {
         return res;
     }
 
+    private void registaAvancado (Equipa equipa) throws Exception {
+        String nome;
+        int numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe;
+        System.out.println("Insere o nome do jogador: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Insere o numero da camisola: ");
+        try {
+            numeroC = scanner.nextInt();
+            numeroC = numeroC >= 100 ? 99 : numeroC;
+            numeroC = numeroC < 0 ? 1 : numeroC;
+            scanner.nextLine();
+            boolean exists = equipa.getJogadores().containsKey(numeroC);
+            while (exists) {
+                System.out.println("Número invalido, tenta de novo: ");
+                numeroC = scanner.nextInt();
+                numeroC = numeroC >= 100 ? 99 : numeroC;
+                numeroC = numeroC < 0 ? 1 : numeroC;
+                scanner.nextLine();
+                exists = equipa.getJogadores().containsKey(numeroC);
+            }
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a velocidade: ");
+        try {
+            velocidade = scanner.nextInt();
+            velocidade = velocidade >= 100 ? 99 : velocidade;
+            velocidade = velocidade < 0 ? 1 : velocidade;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a resistência: ");
+        try {
+            resistencia = scanner.nextInt();
+            resistencia = resistencia >= 100 ? 99 : resistencia;
+            resistencia = resistencia < 0 ? 1 : resistencia;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a destreza: ");
+        try {
+            destreza = scanner.nextInt();
+            destreza = destreza >= 100 ? 99 : destreza;
+            destreza = destreza < 0 ? 1 : destreza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a impulsão: ");
+        try {
+            impulsao = scanner.nextInt();
+            impulsao = impulsao >= 100 ? 99 : impulsao;
+            impulsao = impulsao < 0 ? 1 : impulsao;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de jogo de cabeça: ");
+        try {
+            cabeceamento = scanner.nextInt();
+            cabeceamento = cabeceamento >= 100 ? 99 : cabeceamento;
+            cabeceamento = cabeceamento < 0 ? 1 : cabeceamento;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de remate: ");
+        try {
+            remate = scanner.nextInt();
+            remate = remate >= 100 ? 99 : remate;
+            remate = remate < 0 ? 1 : remate;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de passe: ");
+        try {
+            passe = scanner.nextInt();
+            passe = passe >= 100 ? 99 : passe;
+            passe = passe < 0 ? 1 : passe;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        equipa.insereJogador(new Avancado(nome, numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe));
+    }
+
+    private void registaDefesa(Equipa equipa) throws Exception {
+        String nome;
+        int numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe;
+        System.out.println("Insere o nome do jogador: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Insere o numero da camisola: ");
+        try {
+            numeroC = scanner.nextInt();
+            numeroC = numeroC >= 100 ? 99 : numeroC;
+            numeroC = numeroC < 0 ? 1 : numeroC;
+            scanner.nextLine();
+            boolean exists = equipa.getJogadores().containsKey(numeroC);
+            while (exists) {
+                System.out.println("Número invalido, tenta de novo: ");
+                numeroC = scanner.nextInt();
+                numeroC = numeroC >= 100 ? 99 : numeroC;
+                numeroC = numeroC < 0 ? 1 : numeroC;
+                scanner.nextLine();
+                exists = equipa.getJogadores().containsKey(numeroC);
+            }
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a velocidade: ");
+        try {
+            velocidade = scanner.nextInt();
+            velocidade = velocidade >= 100 ? 99 : velocidade;
+            velocidade = velocidade < 0 ? 1 : velocidade;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a resistência: ");
+        try {
+            resistencia = scanner.nextInt();
+            resistencia = resistencia >= 100 ? 99 : resistencia;
+            resistencia = resistencia < 0 ? 1 : resistencia;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a destreza: ");
+        try {
+            destreza = scanner.nextInt();
+            destreza = destreza >= 100 ? 99 : destreza;
+            destreza = destreza < 0 ? 1 : destreza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a impulsão: ");
+        try {
+            impulsao = scanner.nextInt();
+            impulsao = impulsao >= 100 ? 99 : impulsao;
+            impulsao = impulsao < 0 ? 1 : impulsao;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de jogo de cabeça: ");
+        try {
+            cabeceamento = scanner.nextInt();
+            cabeceamento = cabeceamento >= 100 ? 99 : cabeceamento;
+            cabeceamento = cabeceamento < 0 ? 1 : cabeceamento;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de remate: ");
+        try {
+            remate = scanner.nextInt();
+            remate = remate >= 100 ? 99 : remate;
+            remate = remate < 0 ? 1 : remate;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de passe: ");
+        try {
+            passe = scanner.nextInt();
+            passe = passe >= 100 ? 99 : passe;
+            passe = passe < 0 ? 1 : passe;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        equipa.insereJogador(new Defesa(nome, numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe));
+    }
+
+    private void registaGuardaRedes (Equipa equipa) throws Exception {
+        String nome;
+        int numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, elast;
+        System.out.println("Insere o nome do jogador: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Insere o numero da camisola: ");
+        try {
+            numeroC = scanner.nextInt();
+            numeroC = numeroC >= 100 ? 99 : numeroC;
+            numeroC = numeroC < 0 ? 1 : numeroC;
+            scanner.nextLine();
+            boolean exists = equipa.getJogadores().containsKey(numeroC);
+            while (exists) {
+                System.out.println("Número invalido, tenta de novo: ");
+                numeroC = scanner.nextInt();
+                scanner.nextLine();
+                exists = equipa.getJogadores().containsKey(numeroC);
+            }
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a velocidade: ");
+        try {
+            velocidade = scanner.nextInt();
+            velocidade = velocidade >= 100 ? 99 : velocidade;
+            velocidade = velocidade < 0 ? 1 : velocidade;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a resistência: ");
+        try {
+            resistencia = scanner.nextInt();
+            resistencia = resistencia >= 100 ? 99 : resistencia;
+            resistencia = resistencia < 0 ? 1 : resistencia;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a destreza: ");
+        try {
+            destreza = scanner.nextInt();
+            destreza = destreza >= 100 ? 99 : destreza;
+            destreza = destreza < 0 ? 1 : destreza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a impulsão: ");
+        try {
+            impulsao = scanner.nextInt();
+            impulsao = impulsao >= 100 ? 99 : impulsao;
+            impulsao = impulsao < 0 ? 1 : impulsao;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de jogo de cabeça: ");
+        try {
+            cabeceamento = scanner.nextInt();
+            cabeceamento = cabeceamento >= 100 ? 99 : cabeceamento;
+            cabeceamento = cabeceamento < 0 ? 1 : cabeceamento;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de remate: ");
+        try {
+            remate = scanner.nextInt();
+            remate = remate >= 100 ? 99 : remate;
+            remate = remate < 0 ? 1 : remate;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de passe: ");
+        try {
+            passe = scanner.nextInt();
+            passe = passe >= 100 ? 99 : passe;
+            passe = passe < 0 ? 1 : passe;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a elasticidade: ");
+        try {
+            elast = scanner.nextInt();
+            elast = elast >= 100 ? 99 : elast;
+            elast = elast < 0 ? 1 : elast;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        equipa.insereJogador(new GuardaRedes(nome, numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, elast));
+    }
+
+    private void registaMedio (Equipa equipa) throws Exception {
+        String nome;
+        int numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, recup;
+        System.out.println("Insere o nome do jogador: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Insere o numero da camisola: ");
+        try {
+            numeroC = scanner.nextInt();
+            numeroC = numeroC >= 100 ? 99 : numeroC;
+            numeroC = numeroC < 0 ? 1 : numeroC;
+            scanner.nextLine();
+            boolean exists = equipa.getJogadores().containsKey(numeroC);
+            while (exists) {
+                System.out.println("Número invalido, tenta de novo: ");
+                numeroC = scanner.nextInt();
+                numeroC = numeroC >= 100 ? 99 : numeroC;
+                numeroC = numeroC < 0 ? 1 : numeroC;
+                scanner.nextLine();
+                exists = equipa.getJogadores().containsKey(numeroC);
+            }
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a velocidade: ");
+        try {
+            velocidade = scanner.nextInt();
+            velocidade = velocidade >= 100 ? 99 : velocidade;
+            velocidade = velocidade < 0 ? 1 : velocidade;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a resistência: ");
+        try {
+            resistencia = scanner.nextInt();
+            resistencia = resistencia >= 100 ? 99 : resistencia;
+            resistencia = resistencia < 0 ? 1 : resistencia;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a destreza: ");
+        try {
+            destreza = scanner.nextInt();
+            destreza = destreza >= 100 ? 99 : destreza;
+            destreza = destreza < 0 ? 1 : destreza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a impulsão: ");
+        try {
+            impulsao = scanner.nextInt();
+            impulsao = impulsao >= 100 ? 99 : impulsao;
+            impulsao = impulsao < 0 ? 1 : impulsao;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de jogo de cabeça: ");
+        try {
+            cabeceamento = scanner.nextInt();
+            cabeceamento = cabeceamento >= 100 ? 99 : cabeceamento;
+            cabeceamento = cabeceamento < 0 ? 1 : cabeceamento;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de remate: ");
+        try {
+            remate = scanner.nextInt();
+            remate = remate >= 100 ? 99 : remate;
+            remate = remate < 0 ? 1 : remate;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de passe: ");
+        try {
+            passe = scanner.nextInt();
+            passe = passe >= 100 ? 99 : passe;
+            passe  = passe < 0 ? 1 : passe;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capaciddade de recuperação: ");
+        try {
+            recup = scanner.nextInt();
+            recup = recup >= 100 ? 99 : recup;
+            recup = recup < 0 ? 1 : recup;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        equipa.insereJogador(new Medio(nome, numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, recup));
+    }
+
+    private void registaLateral (Equipa equipa) throws Exception {
+        String nome;
+        int numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, cruza;
+        System.out.println("Insere o nome do jogador: ");
+        nome = scanner.nextLine();
+
+        System.out.println("Insere o numero da camisola: ");
+        try {
+            numeroC = scanner.nextInt();
+            numeroC = numeroC >= 100 ? 99 : numeroC;
+            numeroC = numeroC < 0 ? 1 : numeroC;
+            scanner.nextLine();
+            boolean exists = equipa.getJogadores().containsKey(numeroC);
+            while (exists) {
+                System.out.println("Número invalido, tenta de novo: ");
+                numeroC = scanner.nextInt();
+                numeroC = numeroC >= 100 ? 99 : numeroC;
+                numeroC = numeroC < 0 ? 1 : numeroC;
+                scanner.nextLine();
+                exists = equipa.getJogadores().containsKey(numeroC);
+            }
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a velocidade: ");
+        try {
+            velocidade = scanner.nextInt();
+            velocidade = velocidade >= 100 ? 99 : velocidade;
+            velocidade = velocidade < 0 ? 1 : velocidade;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a resistência: ");
+        try {
+            resistencia = scanner.nextInt();
+            resistencia = resistencia >= 100 ? 99 : resistencia;
+            resistencia = resistencia < 0 ? 1 : resistencia;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a destreza: ");
+        try {
+            destreza = scanner.nextInt();
+            destreza = destreza >= 100 ? 99 : destreza;
+            destreza = destreza < 0 ? 1 : destreza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a impulsão: ");
+        try {
+            impulsao = scanner.nextInt();
+            impulsao = impulsao >= 100 ? 99 : impulsao;
+            impulsao = impulsao < 0 ? 1 : impulsao;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de jogo de cabeça: ");
+        try {
+            cabeceamento = scanner.nextInt();
+            cabeceamento = cabeceamento >= 100 ? 99 : cabeceamento;
+            cabeceamento = cabeceamento < 0 ? 1 : cabeceamento;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de remate: ");
+        try {
+            remate = scanner.nextInt();
+            remate = remate >= 100 ? 99 : remate;
+            remate = remate < 0 ? 1 : remate;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de passe: ");
+        try {
+            passe = scanner.nextInt();
+            passe = passe >= 100 ? 99 : passe;
+            passe = passe < 0 ? 1 : passe;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        System.out.println("Insere a capacidade de cruzamento: ");
+        try {
+            cruza = scanner.nextInt();
+            cruza = cruza >= 100 ? 99 : cruza;
+            cruza = cruza < 0 ? 1 : cruza;
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new Exception(e.toString());
+        }
+        equipa.insereJogador(new GuardaRedes(nome, numeroC, velocidade, resistencia, destreza, impulsao, cabeceamento, remate, passe, cruza));
+    }
+
+    void registaJogador (Equipa equipa) throws Exception {
+        System.out.println("Em que posição queres que o jogador jogue?");
+        System.out.println("1) Avancado\n2) Defesa\n3) Guarda-Redes\n4) Médio\n5) Lateral\n");
+        int pos;
+        pos = scanner.nextInt();
+        scanner.nextLine();
+        switch(pos) {
+            case 1 -> registaAvancado(equipa);
+            case 2 -> registaDefesa(equipa);
+            case 3 -> registaGuardaRedes(equipa);
+            case 4 -> registaMedio(equipa);
+            case 5 -> registaLateral(equipa);
+        }
+    }
+
+    public void registaEquipa () throws Exception {
+        System.out.println("Insere o nome da equipa: ");
+        String nome;
+        nome = scanner.nextLine();
+        try{
+            while (this.equipas.containsKey(nome)) {
+                System.out.println("Essa equipa não é valida, tenta novamente: ");
+                nome = scanner.nextLine();
+            }
+        }
+        catch(NullPointerException e) {
+            throw new EquipaOuJogInvalidoException(e.toString());
+        }
+        Equipa nova = new Equipa(nome);
+        System.out.println("Pretendes inserir Jogadores? \n1) Sim\n2) Não");
+        int numero;
+        try{
+            numero = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch(InputMismatchException e) {
+            throw new EquipaOuJogInvalidoException(e.toString());
+        }
+        while (numero == 1) {
+            registaJogador(nova);
+            System.out.println("Pretendes inserir mais jogadores?\n1) Sim\n2) Não");
+            try{
+                numero = scanner.nextInt();
+                scanner.nextLine();
+            }
+            catch(InputMismatchException e) {
+                throw new EquipaOuJogInvalidoException(e.toString());
+            }
+        }
+        this.equipas.put(nova.getNome(), nova);
+    }
+
     public String resultadoJogo() {
         String casa = "";
         String visitante = "";
@@ -240,7 +812,17 @@ public class StoredData {
                 System.out.println("Não existe nenhum jogo com essas equipas. Tenta inserir as duas equipas de novo: ");
             }
         }
-        return play.getResultado(this);
+        //return play.getResultado(this);
+        return null;
+    }
+
+    public void storeData () throws IOException, FileNotFoundException {
+        String outputName;
+        System.out.println("Insere o nome do ficheiro de output: ");
+        outputName = scanner.nextLine();
+        ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(outputName));
+        os.writeObject(this);
+        os.close();
     }
 
     public StoredData clone () {return new StoredData(this);}
