@@ -67,15 +67,6 @@ public class Parser {
         }
 
         StoredData sd = new StoredData(equipas, jogos);
-
-        //debug
-        //or (Equipa e: equipas.values()){
-        //   System.out.println(e.toString());
-        //
-        //or (Jogo jog: jogos){
-        //   System.out.println(jog.toString());
-        //
-        
         return sd;
     }
 

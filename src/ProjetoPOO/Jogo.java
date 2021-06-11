@@ -107,6 +107,10 @@ public class Jogo implements Serializable {
         sb.append("Jogo: ").append("| ").append(this.equipaCasa).append(" | vs | ").append(this.equipaFora).append(" |").append(" {\n");
         sb.append("\tData: ").append(this.date).append("\n");
         sb.append("\tScore: ").append(this.golosCasa).append("-").append(this.golosFora).append("\n");
+        sb.append("\tJogadores principais casa: ");
+        sb.append(this.jogadoresCasa.toString()).append("\n");
+        sb.append("\tJohadores principais fora: ");
+        sb.append(this.jogadoresFora.toString()).append("\n");
         sb.append("}\n");
 
         return sb.toString();
@@ -127,6 +131,17 @@ public class Jogo implements Serializable {
         e.removeJogador(e.getJogadores().get(numero));
         e.insereJogador(d.getEquipas().get(this.equipaFora).getJogadores().get(this.substituicoesFora.get(numero)));
         System.out.println("Substituição: " + numero + "-> " + this.substituicoesFora.get(numero));
+    }
+
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Jogo jog = (Jogo) o;
+        return this.substituicoesCasa.equals(jog.getSubstituicoesCasa()) && this.substituicoesFora.equals(jog.getSubstitucoesFora()) &&
+                this.golosFora == jog.getGolosFora() && this.golosCasa == jog.getGolosFora() && this.equipaCasa.equals(jog.getEquipaCasa()) &&
+                this.equipaFora.equals(jog.getEquipaFora()) && this.date.equals(jog.getDate()) && this.substituicoesFora.values().equals(jog.getSubstitucoesFora().values()) &&
+                this.substituicoesFora.keySet().equals(jog.getSubstitucoesFora().keySet()) && this.substituicoesCasa.values().equals(jog.getSubstituicoesCasa().values()) &&
+                this.substituicoesCasa.keySet().equals(jog.getSubstituicoesCasa().keySet());
     }
 
     public Jogo clone () {return new Jogo(this);}

@@ -6,7 +6,8 @@ import java.io.ObjectInputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Menu extends Exception{
+public class Menu extends Exception {
+    private static StoredData d = new StoredData();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static StoredData loadData() throws IOException, ClassNotFoundException {
@@ -17,7 +18,6 @@ public class Menu extends Exception{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(inputFile));
             StoredData sd = (StoredData) is.readObject();
             is.close();
-            System.out.println("Dados do ficheiro carregados com sucesso!\n");
             return sd;
         }
         catch(FileNotFoundException e) {
@@ -42,18 +42,83 @@ public class Menu extends Exception{
         }
     }
 
+    public static void carregaFicheiro () throws LinhaIncorretaException, IOException, ClassNotFoundException {
+        System.out.println("A partir de que ficheiro pretende carregar a informação?");
+        System.out.println("1) logs.txt\n2) Outro");
+        int res;
+        try {
+            res = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch(InputMismatchException e) {
+            throw new InputMismatchException("Argumento inserido não é compatível.");
+        }
+        while (res != 1 && res != 2) {
+            System.out.println("Argumento inserido apenas pode ser \"1\" ou \"2\". Tenta novamente: ");
+            try {
+                res = scanner.nextInt();
+                scanner.nextLine();
+            }
+            catch(InputMismatchException e) {
+                throw new InputMismatchException("Argumento inserido não é compatível.");
+            }
+        }
+        switch(res) {
+            case 1 -> d = Parser.parse();
+            case 2 -> d = loadData();
+        }
+        System.out.println("Informação carregada com sucesso!\n");
+    }
+
+    public static void menuJogos () {
+        System.out.printf("1) Lista de Histórico de jogos.\n2) Consultar um jogo do histórico.\nEscreve aqui a tua opção: ");
+        int jogo;
+        try {
+            jogo = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            throw new InputMismatchException("Argumento introduzido tem de ser um inteiro.");
+        }
+        while (jogo < 1 || jogo > 2) {
+            System.out.println("Número introduzido está fora de alcance. Tenta novamente:");
+            try {
+                jogo = scanner.nextInt();
+                scanner.nextLine();
+            }
+            catch (InputMismatchException e) {
+                throw new InputMismatchException("Argumento introduzido tem de ser um inteiro.");
+            }
+        }
+        switch(jogo) {
+            case 1 -> System.out.println(d.showJogos());
+            case 2 -> {
+                String casa, fora;
+                boolean found = false;
+                System.out.println("Insere o nome da equipa da casa:");
+                casa = scanner.nextLine();
+                System.out.printf("Insere o nome da equipa visitante: ");
+                fora = scanner.nextLine();
+                for (Jogo j : d.getJogos()) {
+                    if (j.getEquipaFora().equals(fora) && j.getEquipaCasa().equals(casa)) {
+                        System.out.println(j.toString());
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) System.out.println("Não ocorreu nenhum jogo entre essas duas equipas.\n");
+            }
+        }
+    }
     public static void menuPrincipal() throws Exception {
-        StoredData d = new StoredData();
-        d = Parser.parse();
         StringBuilder sb = new StringBuilder("Menu principal: \n");
-            sb.append("1: Definições de equipas\n");
-            sb.append("2: Lista de Jogadores. \n");
-            sb.append("3: Lista de Jogos.\n");
-            sb.append("4: Troca um jogador de equipa.\n");
-            sb.append("5: Consultar Jogador.\n");
-            sb.append("6: Obter resultado de um jogo.\n");
+            sb.append("1: Carregar informação a partir de ficheiro.\n");
+            sb.append("2: Definições de equipas\n");
+            sb.append("3: Lista de Jogadores. \n");
+            sb.append("4: Jogos.\n");
+            sb.append("5: Troca um jogador de equipa.\n");
+            sb.append("6: Consultar Jogador.\n");
             sb.append("7: Guardar Informação em ficheiro.\n");
-            sb.append("8: Ler informação de um ficheiro.\n");
             sb.append("0: Sair.\n");
             sb.append("Escreve a opcao: ");
         while (true) {
@@ -69,7 +134,8 @@ public class Menu extends Exception{
             }
             scanner.nextLine();
             switch (scan) {
-                case 1 -> {
+                case 1 -> carregaFicheiro();
+                case 2 -> {
                     System.out.println("1) Consulta Equipa\n2) Lista de Equipas\n3) Registar uma Equipa\n");
                     int ans = 0;
                     boolean pass = false;
@@ -89,13 +155,11 @@ public class Menu extends Exception{
                         case 3 -> d.registaEquipa();
                     }
                 }
-                case 2 -> System.out.println(d.showJogadores());
-                case 3 -> System.out.println(d.showJogos());
-                case 4 -> d.trocaJogador();
-                case 5 -> System.out.println(d.consultarJogador());
-                case 6 -> System.out.println(d.resultadoJogo());
+                case 3 -> System.out.println(d.showJogadores());
+                case 4 -> menuJogos();
+                case 5 -> d.trocaJogador();
+                case 6 -> System.out.println(d.consultarJogador());
                 case 7 -> d.storeData();
-                case 8 -> d = loadData();
                 case 0 -> System.exit(0);
             }
         }
