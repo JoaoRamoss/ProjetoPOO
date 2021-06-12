@@ -42,6 +42,18 @@ public class Jogo implements Serializable {
         this.substituicoesCasa = j.getSubstituicoesCasa();
     }
 
+    public Jogo() {
+        this.equipaCasa = "";
+        this.equipaFora = "";
+        this.golosCasa = 0;
+        this.golosFora = 0;
+        this.date = LocalDate.now();
+        this.jogadoresCasa = new ArrayList<>();
+        this.jogadoresFora = new ArrayList<>();
+        this.substituicoesFora = new HashMap<>();
+        this.substituicoesCasa = new HashMap<>();
+    }
+
     public static Jogo parse(String input){
         String[] campos = input.split(",");
         String[] data = campos[4].split("-");
@@ -111,6 +123,16 @@ public class Jogo implements Serializable {
         sb.append(this.jogadoresCasa.toString()).append("\n");
         sb.append("\tJohadores principais fora: ");
         sb.append(this.jogadoresFora.toString()).append("\n");
+        sb.append("\tSubstituições da equipa da casa: [");
+        for (int i : this.substituicoesCasa.keySet()) {
+            sb.append(i).append("->").append(this.substituicoesCasa.get(i)).append(",");
+        }
+        sb.append("]\n");
+        sb.append("\tSubstituições da equipa Visitante: [");
+        for (int i : this.substituicoesFora.keySet()) {
+            sb.append(i).append("->").append(this.substituicoesFora.get(i)).append(",");
+        }
+        sb.append("]\n");
         sb.append("}\n");
 
         return sb.toString();
@@ -119,18 +141,6 @@ public class Jogo implements Serializable {
     public static void run () {
         int mins = 0;
 
-    }
-
-    private void substituicaoCasa(StoredData d, Equipa e, int numero) {
-        e.removeJogador(e.getJogadores().get(numero));
-        e.insereJogador(d.getEquipas().get(this.equipaCasa).getJogadores().get(this.substituicoesCasa.get(numero)));
-        System.out.println("Substituição: " + numero + "-> " + this.substituicoesCasa.get(numero));
-    }
-
-    private void substituicaoFora(StoredData d, Equipa e, int numero) {
-        e.removeJogador(e.getJogadores().get(numero));
-        e.insereJogador(d.getEquipas().get(this.equipaFora).getJogadores().get(this.substituicoesFora.get(numero)));
-        System.out.println("Substituição: " + numero + "-> " + this.substituicoesFora.get(numero));
     }
 
     public boolean equals (Object o) {

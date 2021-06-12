@@ -119,6 +119,7 @@ public class Menu extends Exception {
             sb.append("5: Troca um jogador de equipa.\n");
             sb.append("6: Consultar Jogador.\n");
             sb.append("7: Guardar Informação em ficheiro.\n");
+            sb.append("8: Simulação de um jogo.\n");
             sb.append("0: Sair.\n");
             sb.append("Escreve a opcao: ");
         while (true) {
@@ -160,6 +161,7 @@ public class Menu extends Exception {
                 case 5 -> d.trocaJogador();
                 case 6 -> System.out.println(d.consultarJogador());
                 case 7 -> d.storeData();
+                case 8 -> d.simulaçãoSetup();
                 case 0 -> System.exit(0);
             }
         }

@@ -781,6 +781,29 @@ public class StoredData implements Serializable {
         this.equipas.put(nova.getNome(), nova);
     }
 
+    public void simulaçãoSetup() throws Exception {
+        String casa = "";
+        String vis = "";
+        System.out.println("Nome da equipa da casa: ");
+        casa = scanner.nextLine();
+        while(!this.equipas.containsKey(casa)) {
+            System.out.println("Equipa inválida. tenta novamente:");
+            casa = scanner.nextLine();
+        }
+        Equipa casaE = this.equipas.get(casa);
+
+        System.out.println("Nome da equipa Visitante: ");
+        vis = scanner.nextLine();
+        while(!this.equipas.containsKey(vis)) {
+            System.out.println("Equipa inválida. tenta novamente:");
+            vis = scanner.nextLine();
+        }
+        Equipa visE = this.equipas.get(vis);
+        Simulacao s = new Simulacao(casaE, visE);
+        Jogo j = s.run();
+        this.jogos.add(j);
+    }
+
     public void storeData () throws IOException, FileNotFoundException {
         String outputName;
         System.out.println("Insere o nome do ficheiro de output: ");
