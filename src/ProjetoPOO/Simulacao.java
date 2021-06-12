@@ -50,8 +50,27 @@ public class Simulacao {
                     for (int i = 0; i < 2; i++) {
                         res.add(topMed.get(i).getNumeroCamisola());
                     }
-                } catch (NullPointerException e) {
-                    throw new NullPointerException("Não há jogadores suficientes na equipa" + this.equipaCasa.getNome() + "para usar a tática 1-4-4-2.");
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IndexOutOfBoundsException("Não há jogadores suficientes na equipa " + this.equipaCasa.getNome() + " para usar a tática 1-4-4-2.");
+                }
+            }
+            case 2 -> {
+                try {
+                    res.add(this.equipaCasa.getTop("GuardaRedes").get(0).getNumeroCamisola());
+                    List<Jogador> topDef = this.equipaCasa.getTop("Defesa");
+                    for (int i = 0; i < 4; i++) {
+                        res.add(topDef.get(i).getNumeroCamisola());
+                    }
+                    List<Jogador> topMed = this.equipaCasa.getTop("Medio");
+                    for (int i = 0; i < 3; i++) {
+                        res.add(topMed.get(i).getNumeroCamisola());
+                    }
+                    List<Jogador> topAv = this.equipaCasa.getTop("Avancado");
+                    for (int i = 0; i < 3; i++) {
+                        res.add(topMed.get(i).getNumeroCamisola());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IndexOutOfBoundsException("Não há jogadores suficientes na equipa " + this.equipaCasa.getNome() + " para usar a tática 1-4-3-3.");
                 }
             }
         }
@@ -75,8 +94,27 @@ public class Simulacao {
                     for (int i = 0; i < 2; i++) {
                         res.add(topMed.get(i).getNumeroCamisola());
                     }
-                } catch (NullPointerException e) {
-                    throw new NullPointerException("Não há jogadores suficientes na equipa" + this.equipaFora.getNome() + "para usar a tática 1-4-4-2.");
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IndexOutOfBoundsException("Não há jogadores suficientes na equipa " + this.equipaFora.getNome() + " para usar a tática 1-4-4-2.");
+                }
+            }
+            case 2 -> {
+                try {
+                    res.add(this.equipaFora.getTop("GuardaRedes").get(0).getNumeroCamisola());
+                    List<Jogador> topDef = this.equipaFora.getTop("Defesa");
+                    for (int i = 0; i < 4; i++) {
+                        res.add(topDef.get(i).getNumeroCamisola());
+                    }
+                    List<Jogador> topMed = this.equipaFora.getTop("Medio");
+                    for (int i = 0; i < 3; i++) {
+                        res.add(topMed.get(i).getNumeroCamisola());
+                    }
+                    List<Jogador> topAv = this.equipaFora.getTop("Avancado");
+                    for (int i = 0; i < 3; i++) {
+                        res.add(topMed.get(i).getNumeroCamisola());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IndexOutOfBoundsException("Não há jogadores suficientes na equipa " + this.equipaFora.getNome() + " para usar a tática 1-4-3-3.");
                 }
             }
         }
@@ -191,7 +229,7 @@ public class Simulacao {
         int golosCasa = 0, golosFora = 0;
         int minutos = 0;
         boolean bolaCasa = true;
-        System.out.println("Que tática é que a equipa " + this.equipaCasa.getNome() + "vai usar?\n1) 1-4-4-2\n2) 1-4-3-3\nInsere a resposta aqui: ");
+        System.out.println("Que tática é que a equipa " + this.equipaCasa.getNome() + " vai usar?\n1) 1-4-4-2\n2) 1-4-3-3\nInsere a resposta aqui: ");
         int taticaCasa;
         try {
             taticaCasa = scanner.nextInt();
@@ -200,7 +238,7 @@ public class Simulacao {
         catch(InputMismatchException e) {
             throw new InputMismatchException("Argumento inserido tem de ser um número inteiro.");
         }
-        System.out.println("Que tática é que a equipa " + this.equipaFora.getNome() + "vai usar?\n1) 1-4-4-2\n2) 1-4-3-3\nInsere a resposta aqui: ");
+        System.out.println("Que tática é que a equipa " + this.equipaFora.getNome() + " vai usar?\n1) 1-4-4-2\n2) 1-4-3-3\nInsere a resposta aqui: ");
         int taticaFora;
         try {
             taticaFora = scanner.nextInt();
